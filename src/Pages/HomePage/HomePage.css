@@ -12,11 +12,7 @@
   left: 29rem;
   width: 15.8rem;
   height: 34rem;
-  animation-name: fade;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-duration: 4s;
-  animation-direction: alternate;
+  animation: ease-in-out 3s infinite alternate fade;
 }
 
 .auth-container {
@@ -63,7 +59,7 @@ input {
 }
 
 .home-img img:nth-of-type(2) {
-  animation-delay: 4s;
+  animation-delay: 3s;
 }
 .home-img img:nth-of-type(3) {
   animation-delay: 2s;

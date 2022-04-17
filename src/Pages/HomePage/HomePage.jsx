@@ -5,10 +5,10 @@ const HomePage = () => {
   return (
     <div className=" main-container flex justify-center items-center">
       <div className="home-img">
-        <img src="./img/home-img.png" alt="" className="original-img" />
-        <img src="./img/mobile-img1.png" alt="" className="small-img" />
-        <img src="./img/mobile-img3.png" alt="" className="small-img" />
-        <img src="./img/mobile-img2.png" alt="" className="small-img" />
+        <img src="./img/home-img.png" alt="phone" className="original-img" />
+        <img src="./img/mobile-img1.png" alt="screens" className="small-img" />
+        <img src="./img/mobile-img3.png" alt="screens" className="small-img" />
+        <img src="./img/mobile-img2.png" alt="screens" className="small-img" />
       </div>
 
       <form className=" auth-container border-2">
