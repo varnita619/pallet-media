@@ -6,23 +6,23 @@
   position: relative;
 }
 
-.small-img1 {
+.small-img {
   position: absolute;
   top: 3.5rem;
-  left: 28rem;
+  left: 29rem;
   width: 15.8rem;
   height: 34rem;
   animation-name: fade;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
-  animation-duration: 6s;
+  animation-duration: 4s;
   animation-direction: alternate;
 }
 
 .auth-container {
   background-color: var(--background-white);
   max-width: 50rem;
-  width: 30rem;
+  width: 28rem;
   padding: 1rem;
 }
 
@@ -63,15 +63,12 @@ input {
 }
 
 .home-img img:nth-of-type(2) {
-  animation-delay: 6s;
-}
-.home-img img:nth-of-type(3) {
   animation-delay: 4s;
 }
-.home-img img:nth-of-type(4) {
+.home-img img:nth-of-type(3) {
   animation-delay: 2s;
 }
-.home-img img:nth-of-type(5) {
+.home-img img:nth-of-type(4) {
   animation-delay: 0;
 }
 

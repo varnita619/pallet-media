@@ -6,13 +6,12 @@ const HomePage = () => {
     <div className=" main-container flex justify-center items-center">
       <div className="home-img">
         <img src="./img/home-img.png" alt="" className="original-img" />
-        <img src="./img/mobile-img1.png" alt="" className="small-img1" />
-        <img src="./img/mobile-img2.png" alt="" className="small-img1" />
-        <img src="./img/mobile-img3.png" alt="" className="small-img1" />
-        <img src="./img/mobile-img4.png" alt="" className="small-img1" />
+        <img src="./img/mobile-img1.png" alt="" className="small-img" />
+        <img src="./img/mobile-img3.png" alt="" className="small-img" />
+        <img src="./img/mobile-img2.png" alt="" className="small-img" />
       </div>
 
-      <form className=" auth-container">
+      <form className=" auth-container border-2">
         <h1 className="text-3xl font-bold italic text-center py-2">Pallet</h1>
         <div className="flex justify-center flex-col gap-2 items-center mt-2">
           <input
