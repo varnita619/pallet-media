@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./HomePage.css";
-const HomePage = () => {
+const Signup = () => {
   return (
     <div className=" main-container flex justify-center items-center">
       <div className="home-img">
@@ -17,8 +17,26 @@ const HomePage = () => {
           <input
             className="py-1 w-full border"
             type="text"
-            placeholder="Enter Email - test@gmail.com"
-            name="email"
+            placeholder="First Name"
+            name="first name"
+            autoComplete="true"
+            required
+          />
+
+          <input
+            className="py-1 w-full border"
+            type="text"
+            placeholder="Last Name"
+            name="last name"
+            autoComplete="true"
+            required
+          />
+
+          <input
+            className="py-1 w-full border"
+            type="text"
+            placeholder="Username"
+            name="psw"
             autoComplete="true"
             required
           />
@@ -26,7 +44,7 @@ const HomePage = () => {
           <input
             className="py-1 w-full border"
             type="password"
-            placeholder="test123"
+            placeholder="password"
             name="psw"
             autoComplete="true"
             required
@@ -34,17 +52,17 @@ const HomePage = () => {
 
           <div className="login-btn-div mt-2">
             <button type="submit" className="login-btn">
-              Login
+              Signup
             </button>
           </div>
         </div>
 
         <div className="have-account text-center mt-2">
-          <Link to="/">Don't have an account ? </Link>
+          <Link to="/">Already have an account ? </Link>
         </div>
       </form>
     </div>
   );
 };
 
-export { HomePage };
+export { Signup };

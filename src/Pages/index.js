@@ -1,1 +1,2 @@
-export {HomePage} from "./HomePage/HomePage";
+export {HomePage} from "./Auth/HomePage";
+export {Signup} from "./Auth/Signup";
