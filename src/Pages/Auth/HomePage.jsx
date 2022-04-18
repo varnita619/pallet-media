@@ -18,7 +18,7 @@ const HomePage = () => {
             className="py-1 w-full border"
             type="text"
             placeholder="Username"
-            name="email"
+            name="username"
             autoComplete="true"
             required
           />
@@ -27,7 +27,7 @@ const HomePage = () => {
             className="py-1 w-full border"
             type="password"
             placeholder="password"
-            name="psw"
+            name="password"
             autoComplete="true"
             required
           />

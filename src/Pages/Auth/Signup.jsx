@@ -36,7 +36,7 @@ const Signup = () => {
             className="py-1 w-full border"
             type="text"
             placeholder="Username"
-            name="psw"
+            name="username"
             autoComplete="true"
             required
           />
@@ -45,7 +45,7 @@ const Signup = () => {
             className="py-1 w-full border"
             type="password"
             placeholder="password"
-            name="psw"
+            name="password"
             autoComplete="true"
             required
           />
