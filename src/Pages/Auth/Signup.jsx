@@ -1,0 +1,68 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import "./HomePage.css";
+const Signup = () => {
+  return (
+    <div className=" main-container flex justify-center items-center">
+      <div className="home-img">
+        <img src="./img/home-img.png" alt="phone" className="original-img" />
+        <img src="./img/mobile-img1.png" alt="screens" className="small-img" />
+        <img src="./img/mobile-img3.png" alt="screens" className="small-img" />
+        <img src="./img/mobile-img2.png" alt="screens" className="small-img" />
+      </div>
+
+      <form className=" auth-container border-2">
+        <h1 className="text-3xl font-bold italic text-center py-2">Pallet</h1>
+        <div className="flex justify-center flex-col gap-2 items-center mt-2">
+          <input
+            className="py-1 w-full border"
+            type="text"
+            placeholder="First Name"
+            name="first name"
+            autoComplete="true"
+            required
+          />
+
+          <input
+            className="py-1 w-full border"
+            type="text"
+            placeholder="Last Name"
+            name="last name"
+            autoComplete="true"
+            required
+          />
+
+          <input
+            className="py-1 w-full border"
+            type="text"
+            placeholder="Username"
+            name="username"
+            autoComplete="true"
+            required
+          />
+
+          <input
+            className="py-1 w-full border"
+            type="password"
+            placeholder="password"
+            name="password"
+            autoComplete="true"
+            required
+          />
+
+          <div className="login-btn-div mt-2">
+            <button type="submit" className="login-btn">
+              Signup
+            </button>
+          </div>
+        </div>
+
+        <div className="have-account text-center mt-2">
+          <Link to="/">Already have an account ? </Link>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export { Signup };

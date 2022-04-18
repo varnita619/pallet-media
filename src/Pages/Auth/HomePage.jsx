@@ -17,8 +17,8 @@ const HomePage = () => {
           <input
             className="py-1 w-full border"
             type="text"
-            placeholder="Enter Email - test@gmail.com"
-            name="email"
+            placeholder="Username"
+            name="username"
             autoComplete="true"
             required
           />
@@ -26,8 +26,8 @@ const HomePage = () => {
           <input
             className="py-1 w-full border"
             type="password"
-            placeholder="test123"
-            name="psw"
+            placeholder="password"
+            name="password"
             autoComplete="true"
             required
           />
@@ -40,7 +40,7 @@ const HomePage = () => {
         </div>
 
         <div className="have-account text-center mt-2">
-          <Link to="/">Don't have an account ? </Link>
+          <Link to="/signup">Don't have an account ? </Link>
         </div>
       </form>
     </div>
