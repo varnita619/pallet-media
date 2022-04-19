@@ -4,6 +4,7 @@ body{
 
 :root{
   --primary-color:rgb(14, 165, 233);
+  --secondary-color: #f73378;
   --text-color:rgb(56, 189, 248);
   --white-color:white;
   --background-color: #fafafa;

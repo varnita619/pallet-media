@@ -1,67 +1,123 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import * as React from "react";
+import {
+  Link,
+  Paper,
+  Box,
+  Grid,
+  Typography,
+  Checkbox,
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+} from "@mui/material";
+import {  ThemeProvider } from "@mui/material/styles";
+import {theme} from "../../theme";
 import "./HomePage.css";
+
+
 const Signup = () => {
   return (
-    <div className=" main-container flex justify-center items-center">
-      <div className="home-img">
-        <img src="./img/home-img.png" alt="phone" className="original-img" />
-        <img src="./img/mobile-img1.png" alt="screens" className="small-img" />
-        <img src="./img/mobile-img3.png" alt="screens" className="small-img" />
-        <img src="./img/mobile-img2.png" alt="screens" className="small-img" />
-      </div>
+    <ThemeProvider theme={theme}>
+      <Grid container component="main" sx={{ height: "100vh" }}>
+        <CssBaseline />
 
-      <form className=" auth-container border-2">
-        <h1 className="text-3xl font-bold italic text-center py-2">Pallet</h1>
-        <div className="flex justify-center flex-col gap-2 items-center mt-2">
-          <input
-            className="py-1 w-full border"
-            type="text"
-            placeholder="First Name"
-            name="first name"
-            autoComplete="true"
-            required
-          />
+        <Grid item xs={12} sm={6} md={4} component={Paper} elevation={6} square className="as" sx={{ backgroundColor:'#fafafa',      borderRight:"1px solid #ffdfc3"}}>
+          <Box
+            sx={{
+              my: 10,
+              mx: 4,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Typography component="h1" variant="h5" sx={{fontWeight:'bold', fontStyle: 'italic'}}>
+              Welcome to <span className="site-name">PalletGram</span>
+            </Typography>
+            <p>Create your account</p>
+            <Box component="form" noValidate sx={{ mt: 1 }}>
+            <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="firstname"
+                label="First Name"
+                name="firstname"
+                autoComplete="firstname"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="lastname"
+                label="Last Name"
+                name="lastname"
+                autoComplete="lastname"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="User Name"
+                name="username"
+                autoComplete="username"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign up
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="/" variant="body2">
+                  {"Already have an account?"}
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Grid>
 
-          <input
-            className="py-1 w-full border"
-            type="text"
-            placeholder="Last Name"
-            name="last name"
-            autoComplete="true"
-            required
-          />
-
-          <input
-            className="py-1 w-full border"
-            type="text"
-            placeholder="Username"
-            name="username"
-            autoComplete="true"
-            required
-          />
-
-          <input
-            className="py-1 w-full border"
-            type="password"
-            placeholder="password"
-            name="password"
-            autoComplete="true"
-            required
-          />
-
-          <div className="login-btn-div mt-2">
-            <button type="submit" className="login-btn">
-              Signup
-            </button>
-          </div>
-        </div>
-
-        <div className="have-account text-center mt-2">
-          <Link to="/">Already have an account ? </Link>
-        </div>
-      </form>
-    </div>
+        <Grid
+          item
+          xs={false}
+          sm={6}
+          md={8}
+          sx={{
+            backgroundImage:
+              "url(./img/bg3.webp)",
+            backgroundRepeat: "no-repeat",
+            backgroundColor: (t) =>
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+      </Grid>
+    </ThemeProvider>
   );
 };
 
