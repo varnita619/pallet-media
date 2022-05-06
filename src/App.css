@@ -11,8 +11,3 @@ body{
   --background-white:rgba(var(--d87, 255, 255, 255), 1);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}

@@ -1,0 +1,43 @@
+@media only screen and (min-width: 200px) {
+  .searchBar {
+    margin-left: 1rem;
+    width: 10rem;
+  }
+  .heading{
+    font-size: 5rem;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .searchBar {
+    margin-left: 5rem;
+    width: 20rem;
+  }
+  .heading{
+    font-size: 3rem;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .searchBar {
+    margin-left: 7rem;
+    width: 25rem;
+  }
+  .heading{
+    font-size: 30rem;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .searchBar {
+    margin-left: 7rem;
+    width: 25rem;
+  }
+}
+
+@media only screen and (min-width: 1500px) {
+  .searchBar {
+    margin-left: 22rem;
+    width: 25rem;
+  }
+}
