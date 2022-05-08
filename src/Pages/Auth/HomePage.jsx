@@ -14,9 +14,19 @@ import {
 import {  ThemeProvider } from "@mui/material/styles";
 import {theme} from "../../theme";
 import "./HomePage.css";
+import { loginHandler } from "../../backend/controllers/AuthController";
 
 
 const HomePage = () => {
+  const [login, setLogin] = React.useState({username: "", password: ""})
+  const loginHandler = (e) =>{
+    e.preventDefault();
+    if(e.target.innerText === 'LOGIN AS GUEST'){
+      setLogin({username:"adarshbalika", password:"adarshBalika123"})
+      
+    }
+
+  }
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -65,9 +75,15 @@ const HomePage = () => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={(e)=> loginHandler(e)}
               >
                 Login
               </Button>
+              <Box sx={{textAlign:'center'}}>
+                <Button onClick={(e)=> loginHandler(e)}>
+                Login As Guest
+                </Button>
+              </Box>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">

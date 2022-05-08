@@ -1,9 +1,15 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+// getting token and user from local Storage
+const token = localStorage.getItem("login-token") || ""
+const user = JSON.parse(localStorage.getItem("user")) || null
+
 export const userSlice = createSlice({
-    name: "user",
+    name: "auth",
     initialState:{
-        user:null
+        user:user,
+        token:token,
+        error:""
     },
     reducers:{
         login:(state,action) =>{
