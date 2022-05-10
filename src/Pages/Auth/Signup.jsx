@@ -11,18 +11,40 @@ import {
   TextField,
   FormControlLabel,
 } from "@mui/material";
-import {  ThemeProvider } from "@mui/material/styles";
-import {theme} from "../../theme";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "../../theme";
 import "./HomePage.css";
-
+import { authServices } from "../../Services/authServices";
 
 const Signup = () => {
+  const [formData, setFormData] = React.useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+    password: "",
+  });
+  const { signupService } = authServices();
+  const signupHandler = (e) => {
+    e.preventDefault();
+    signupService(formData);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
 
-        <Grid item xs={12} sm={6} md={4} component={Paper} elevation={6} square className="as" sx={{ backgroundColor:'#fafafa',      borderRight:"1px solid #ffdfc3"}}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+          component={Paper}
+          elevation={6}
+          square
+          className="as"
+          sx={{ backgroundColor: "#fafafa", borderRight: "1px solid #ffdfc3" }}
+        >
           <Box
             sx={{
               my: 10,
@@ -31,12 +53,16 @@ const Signup = () => {
               flexDirection: "column",
             }}
           >
-            <Typography component="h1" variant="h5" sx={{fontWeight:'bold', fontStyle: 'italic'}}>
+            <Typography
+              component="h1"
+              variant="h5"
+              sx={{ fontWeight: "bold", fontStyle: "italic" }}
+            >
               Welcome to <span className="site-name">PalletGram</span>
             </Typography>
             <p>Create your account</p>
             <Box component="form" noValidate sx={{ mt: 1 }}>
-            <TextField
+              <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -45,6 +71,12 @@ const Signup = () => {
                 name="firstname"
                 autoComplete="firstname"
                 autoFocus
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    firstName: e.target.value,
+                  }))
+                }
               />
               <TextField
                 margin="normal"
@@ -55,6 +87,9 @@ const Signup = () => {
                 name="lastname"
                 autoComplete="lastname"
                 autoFocus
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, lastName: e.target.value }))
+                }
               />
               <TextField
                 margin="normal"
@@ -65,6 +100,9 @@ const Signup = () => {
                 name="username"
                 autoComplete="username"
                 autoFocus
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, userName: e.target.value }))
+                }
               />
               <TextField
                 margin="normal"
@@ -75,6 +113,9 @@ const Signup = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, password: e.target.value }))
+                }
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -85,13 +126,14 @@ const Signup = () => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={(e) => signupHandler(e)}
               >
                 Sign up
               </Button>
               <Grid container>
                 <Grid item xs>
                   <Link href="/" variant="body2">
-                  {"Already have an account?"}
+                    {"Already have an account?"}
                   </Link>
                 </Grid>
               </Grid>
@@ -105,8 +147,7 @@ const Signup = () => {
           sm={6}
           md={8}
           sx={{
-            backgroundImage:
-              "url(./img/bg3.webp)",
+            backgroundImage: "url(./img/bg3.webp)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"

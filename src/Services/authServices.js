@@ -20,7 +20,7 @@ const authServices = () => {
             localStorage.setItem("user", JSON.stringify(foundUser));
 
             if (status === 200) {
-                toast.success("Login successfull", {
+                toast.success(`Welcome ${login.username}`, {
                     position: "top-right"
                 });
                 navigate("/signup")
@@ -35,7 +35,25 @@ const authServices = () => {
         }
     }
 
-    return { loginService }
+    const signupService = async (formData) => {
+        try {
+            const {
+                status,
+                data: { encodedToken },
+            } = await axios.post("/api/auth/signup", formData);
+            localStorage.setItem("Signup-Token", encodedToken);
+            if (status === 201) {
+                navigate("/");
+                toast.success(`Welcome ${formData.firstName}`, { position: "top-right" });
+
+            }
+        }
+        catch (error) {
+            toast.error("Error occured in Signup!", { position: "top-right" });
+        }
+    }
+
+    return { loginService, signupService }
 }
 
 export { authServices }
