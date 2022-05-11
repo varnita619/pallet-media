@@ -20,12 +20,13 @@ const Signup = () => {
   const [formData, setFormData] = React.useState({
     firstName: "",
     lastName: "",
-    userName: "",
+    username: "",
     password: "",
   });
   const { signupService } = authServices();
   const signupHandler = (e) => {
     e.preventDefault();
+    // setFormData({firstName: "", lastName: "", username: "", password: "" })
     signupService(formData);
   };
 
@@ -101,7 +102,7 @@ const Signup = () => {
                 autoComplete="username"
                 autoFocus
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, userName: e.target.value }))
+                  setFormData((prev) => ({ ...prev, username: e.target.value }))
                 }
               />
               <TextField

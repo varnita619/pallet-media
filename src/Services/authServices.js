@@ -31,21 +31,21 @@ const authServices = () => {
             }
 
         } catch (error) {
+            console.log(error)
             toast.error("Error occured in logging in!", { position: "top-right" });
         }
     }
 
     const signupService = async (formData) => {
+        console.log(formData)
         try {
             const {
                 status,
-                data: { encodedToken },
             } = await axios.post("/api/auth/signup", formData);
-            localStorage.setItem("Signup-Token", encodedToken);
+
             if (status === 201) {
                 navigate("/");
-                toast.success(`Welcome ${formData.firstName}`, { position: "top-right" });
-
+                toast.success(`Welcome ${formData.firstName} Login to proceed further`, { position: "top-right" });
             }
         }
         catch (error) {
