@@ -1,9 +1,25 @@
+.heading {
+  color: var(--primary-color);
+}
+
+.input-container{
+  margin: 1rem 0;
+  border-bottom: 1px solid var(--border-color);
+  padding: .5rem;
+  width: 100%;
+}
+
+.action-btn-container{
+  display: flex;
+  justify-content: space-between;
+}
+
 @media only screen and (min-width: 200px) {
   .searchBar {
     margin-left: 1rem;
     width: 10rem;
   }
-  .heading{
+  .heading {
     font-size: 5rem;
   }
 }
@@ -13,7 +29,7 @@
     margin-left: 5rem;
     width: 20rem;
   }
-  .heading{
+  .heading {
     font-size: 3rem;
   }
 }
@@ -23,7 +39,7 @@
     margin-left: 7rem;
     width: 25rem;
   }
-  .heading{
+  .heading {
     font-size: 30rem;
   }
 }

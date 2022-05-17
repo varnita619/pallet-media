@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import {HomePage, Signup} from "./Pages";
+import {HomePage, Signup, UserProfile} from "./Pages";
 import {Toaster} from "react-hot-toast";
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={< HomePage/>}></Route>
         <Route path="/signup" element={< Signup/>}></Route>
+        <Route path="/user-profile" element={<UserProfile />}></Route>
       </Routes>
     </div>
   );

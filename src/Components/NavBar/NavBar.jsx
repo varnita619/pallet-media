@@ -13,15 +13,34 @@ import {
   Tooltip,
   MenuItem,
   Menu,
-  MenuIcon,
+  Fade,
+  Modal,
+  Backdrop,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import CloseIcon from "@mui/icons-material/Close";
 import { ThemeProvider } from "@mui/material/styles";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { theme } from "../../theme";
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import "./NavBar.css";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: ".5px solid #000",
+  borderRadius: "8px",
+  boxShadow: 24,
+  p: 4,
+};
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -37,6 +56,10 @@ const Search = styled("div")(({ theme }) => ({
     width: "auto",
   },
 }));
+
+const Input = styled("input")({
+  display: "none",
+});
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -63,8 +86,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const settings = ["Profile", "Messages", "Notifications", "Logout"];
-const seti = ["sd", "sdf", "sds", "ad"];
+const settings = ["Profile", "Explore", "BookMark", "Liked Posts", "Logout"];
 
 const NavBar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -76,6 +98,10 @@ const NavBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const menuId = "primary-search-account-menu";
 
@@ -112,21 +138,21 @@ const NavBar = () => {
         <AppBar position="static" color="inherit">
           <Toolbar>
             <Box className="heading">
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{
-                display: {
-                  backgroundColor: "neutral",
-                  fontStyle: "italic",
-                  fontWeight: "bold",
-                  fontSize:30
-                },
-              }}
-            >
-              Palletgram
-            </Typography>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{
+                  display: {
+                    backgroundColor: "neutral",
+                    fontStyle: "italic",
+                    fontWeight: "bold",
+                    fontSize: 30,
+                  },
+                }}
+              >
+                Palletgram
+              </Typography>
             </Box>
             <Box className="searchBar">
               <Search>
@@ -151,6 +177,9 @@ const NavBar = () => {
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
+              <IconButton size="large" onClick={handleOpen}>
+                <AddAPhotoIcon />
+              </IconButton>
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
@@ -172,6 +201,53 @@ const NavBar = () => {
         </AppBar>
         {renderMobileMenu}
       </Box>
+
+      <div>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <Box sx={style}>
+              <Typography
+                id="transition-modal-title"
+                variant="h6"
+                component="h2"
+                sx={{ display: "flex", justifyContent: "space-between" }}
+              >
+                New Post
+                <span>
+                  <CloseIcon onClick={handleClose} sx={{cursor:'pointer'}} />
+                </span>
+              </Typography>
+              <div className="input-container">
+                <InputBase placeholder="Enter Your Text Here"></InputBase>
+              </div>
+              <div className="action-btn-container">
+                <label htmlFor="icon-button-file">
+                  <Input accept="image/*" id="icon-button-file" type="file" />
+                  <IconButton
+                    color="primary"
+                    aria-label="upload picture"
+                    component="span"
+                  >
+                    <PhotoCamera />
+                  </IconButton>
+                  </label>
+                  <Button variant="contained" sx={{padding:'.2rem .6rem', height:'2rem', borderRadius:'.3rem'}}>Post</Button>
+               
+              </div>
+            </Box>
+          </Fade>
+        </Modal>
+      </div>
     </ThemeProvider>
   );
 };
