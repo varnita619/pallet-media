@@ -16,6 +16,7 @@ import {
   Fade,
   Modal,
   Backdrop,
+  Paper
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MailIcon from "@mui/icons-material/Mail";
@@ -25,8 +26,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { ThemeProvider } from "@mui/material/styles";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { theme } from "../../theme";
-import LightModeIcon from '@mui/icons-material/LightMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 import "./NavBar.css";
 
 const style = {
@@ -134,120 +135,133 @@ const NavBar = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" color="inherit">
-          <Toolbar>
-            <Box className="heading">
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{
-                  display: {
-                    backgroundColor: "neutral",
-                    fontStyle: "italic",
-                    fontWeight: "bold",
-                    fontSize: 30,
-                  },
-                }}
-              >
-                Palletgram
-              </Typography>
-            </Box>
-            <Box className="searchBar">
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder="Search…"
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </Search>
-            </Box>
-            <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <IconButton size="large" aria-label="show 4 new mails">
-                <Badge badgeContent={4} color="primary">
-                  <MailIcon color="" />
-                </Badge>
-              </IconButton>
-              <IconButton size="large" aria-label="show 7 new notifications">
-                <Badge badgeContent={7} color="primary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <IconButton size="large" onClick={handleOpen}>
-                <AddAPhotoIcon />
-              </IconButton>
-            </Box>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton
-                  onClick={handleOpenUserMenu}
-                  sx={{ p: 0 }}
-                  aria-controls={mobileMenuId}
+      <Paper>
+        <Box sx={{ flexGrow: 1 }}>
+          <AppBar position="static" color="inherit" sx={{borderBottom:'1px solid #d1d4d7'}}>
+            <Toolbar>
+              <Box className="heading">
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{
+                    display: {
+                      backgroundColor: "neutral",
+                      fontStyle: "italic",
+                      fontWeight: "bold",
+                      fontSize: 30,
+                    },
+                  }}
                 >
-                  <Avatar
-                    alt="Remy Sharp"
-                    src="./img/user.jpg"
-                    sx={{ width: 36, height: 36, ml: 1 }}
+                  Palletgram
+                </Typography>
+              </Box>
+              <Box className="searchBar">
+                <Search>
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase
+                    placeholder="Search…"
+                    inputProps={{ "aria-label": "search" }}
                   />
+                </Search>
+              </Box>
+              <Box sx={{ flexGrow: 1 }} />
+              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                <IconButton size="large" aria-label="show 4 new mails">
+                  <Badge badgeContent={4} color="primary">
+                    <MailIcon color="" />
+                  </Badge>
                 </IconButton>
-              </Tooltip>
-            </Box>
-          </Toolbar>
-        </AppBar>
-        {renderMobileMenu}
-      </Box>
+                <IconButton size="large" aria-label="show 7 new notifications">
+                  <Badge badgeContent={7} color="primary">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton size="large" onClick={handleOpen}>
+                  <AddAPhotoIcon />
+                </IconButton>
+              </Box>
 
-      <div>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          open={open}
-          onClose={handleClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={open}>
-            <Box sx={style}>
-              <Typography
-                id="transition-modal-title"
-                variant="h6"
-                component="h2"
-                sx={{ display: "flex", justifyContent: "space-between" }}
-              >
-                New Post
-                <span>
-                  <CloseIcon onClick={handleClose} sx={{cursor:'pointer'}} />
-                </span>
-              </Typography>
-              <div className="input-container">
-                <InputBase placeholder="Enter Your Text Here"></InputBase>
-              </div>
-              <div className="action-btn-container">
-                <label htmlFor="icon-button-file">
-                  <Input accept="image/*" id="icon-button-file" type="file" />
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
                   <IconButton
-                    color="primary"
-                    aria-label="upload picture"
-                    component="span"
+                    onClick={handleOpenUserMenu}
+                    sx={{ p: 0 }}
+                    aria-controls={mobileMenuId}
                   >
-                    <PhotoCamera />
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="./img/user.jpg"
+                      sx={{ width: 36, height: 36, ml: 1 }}
+                    />
                   </IconButton>
+                </Tooltip>
+              </Box>
+            </Toolbar>
+          </AppBar>
+          {renderMobileMenu}
+        </Box>
+
+        <div>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={open}>
+              <Box sx={style}>
+                <Typography
+                  id="transition-modal-title"
+                  variant="h6"
+                  component="h2"
+                  sx={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  New Post
+                  <span>
+                    <CloseIcon
+                      onClick={handleClose}
+                      sx={{ cursor: "pointer" }}
+                    />
+                  </span>
+                </Typography>
+                <div className="input-container">
+                  <textarea style={{width:'100%'}} placeholder="Enter Your Text Here"></textarea>
+                </div>
+                <div className="action-btn-container">
+                  <label htmlFor="icon-button-file">
+                    <Input accept="image/*" id="icon-button-file" type="file" />
+                    <IconButton
+                      color="primary"
+                      aria-label="upload picture"
+                      component="span"
+                    >
+                      <PhotoCamera />
+                    </IconButton>
                   </label>
-                  <Button variant="contained" sx={{padding:'.2rem .6rem', height:'2rem', borderRadius:'.3rem'}}>Post</Button>
-               
-              </div>
-            </Box>
-          </Fade>
-        </Modal>
-      </div>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      padding: ".2rem .6rem",
+                      height: "2rem",
+                      borderRadius: ".3rem",
+                    }}
+                  >
+                    Post
+                  </Button>
+                </div>
+              </Box>
+            </Fade>
+          </Modal>
+        </div>
+      </Paper>
     </ThemeProvider>
   );
 };
