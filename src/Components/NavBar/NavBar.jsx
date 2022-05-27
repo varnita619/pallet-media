@@ -16,6 +16,7 @@ import {
   Modal,
   Backdrop,
   Paper,
+  Link,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
@@ -150,10 +151,20 @@ export const NavBar = () => {
                       fontStyle: "italic",
                       fontWeight: "bold",
                       fontSize: 30,
+                      cursor: "pointer",
                     },
                   }}
                 >
-                  Palletgram
+                  <Link href="/user-profile" sx={{display: {
+                      backgroundColor: "neutral",
+                      fontStyle: "italic",
+                      fontWeight: "bold",
+                      fontSize: 30,
+                      cursor: "pointer",
+                      textDecoration:'none'
+                    },}}>
+                    Palletgram
+                  </Link>
                 </Typography>
               </Box>
               <Box className="searchBar">
@@ -230,7 +241,7 @@ export const NavBar = () => {
                 </Typography>
                 <div className="input-container">
                   <textarea
-                    style={{ width: "100%" }}
+                    style={{ width: "100%", border: "none" }}
                     placeholder="Enter Your Text Here"
                   ></textarea>
                 </div>

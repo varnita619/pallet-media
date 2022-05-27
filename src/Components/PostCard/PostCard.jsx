@@ -13,11 +13,15 @@ import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Bookmark, Comment } from "@mui/icons-material";
 import "./PostCard.css";
-import { EditDeletePost } from "../EditDeletePost/EditDeletePost";
+import { EditDeletePost, CommentsModal } from "../../Components";
 
 export const PostCard = () => {
   const [editDeleteModalOpen, setEditDeleteModalOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [commentsModelOpen, setCommentsModelOpen] = React.useState(false);
+
+  const handleCommentsModelOpen = () => setCommentsModelOpen(true);
+  const handleCommentsModelClose = () => setCommentsModelOpen(false);
 
   const handleEditDeleteModalOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,6 +33,10 @@ export const PostCard = () => {
   };
   return (
     <>
+      <CommentsModal
+        commentsModelOpen={commentsModelOpen}
+        handleCommentsModelClose={handleCommentsModelClose}
+      />
       <Card className="card" sx={{ border: ".5px solid #e2e8f0" }}>
         <CardHeader
           className=""
@@ -71,7 +79,10 @@ export const PostCard = () => {
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label="add to bookmark">
+          <IconButton
+            aria-label="add to bookmark"
+            onClick={handleCommentsModelOpen}
+          >
             <Comment />
           </IconButton>
           <IconButton aria-label="add to bookmark">
