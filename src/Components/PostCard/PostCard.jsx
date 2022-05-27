@@ -11,13 +11,25 @@ import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Bookmark } from "@mui/icons-material";
+import { Bookmark, Comment } from "@mui/icons-material";
 import "./PostCard.css";
+import { EditDeletePost } from "../EditDeletePost/EditDeletePost";
 
 const PostCard = () => {
+  const [editDeleteModalOpen, setEditDeleteModalOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleEditDeleteModalOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+    setEditDeleteModalOpen(true);
+  };
+  const handleEditDeleteModalClose = () => {
+    setAnchorEl(null);
+    setEditDeleteModalOpen(false);
+  };
   return (
     <>
-      <Card className="card" sx={{ border:'.5px solid #e2e8f0'}} >
+      <Card className="card" sx={{ border: ".5px solid #e2e8f0" }}>
         <CardHeader
           className=""
           avatar={
@@ -26,19 +38,27 @@ const PostCard = () => {
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
+            <IconButton
+              aria-label="settings"
+              onClick={handleEditDeleteModalOpen}
+            >
               <MoreVertIcon />
             </IconButton>
           }
           title="Adarsh Balika"
           subheader="May 14, 2022"
         />
+        <EditDeletePost
+          editDeleteModalOpen={editDeleteModalOpen}
+          anchorEl={anchorEl}
+          handleEditDeleteModalClose={handleEditDeleteModalClose}
+        />
         <CardMedia
           component="img"
-          height="350"
+          height="250"
           image="https://res.cloudinary.com/dqgqdj4jf/image/upload/v1653161366/PalletGram/giethoorn-travel_ho6n6i.jpg"
           alt="Paella dish"
-          sx={{objectFit:'contain'}}
+          sx={{ objectFit: "contain" }}
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
@@ -52,6 +72,9 @@ const PostCard = () => {
             <FavoriteIcon />
           </IconButton>
           <IconButton aria-label="add to bookmark">
+            <Comment />
+          </IconButton>
+          <IconButton aria-label="add to bookmark">
             <Bookmark />
           </IconButton>
           <IconButton aria-label="share">
@@ -61,7 +84,7 @@ const PostCard = () => {
       </Card>
 
       {/* second post */}
-      <Card className="card" sx={{ border:'.5px solid #e2e8f0'}} >
+      <Card className="card" sx={{ border: ".5px solid #e2e8f0" }}>
         <CardHeader
           className=""
           avatar={
@@ -93,6 +116,9 @@ const PostCard = () => {
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="add to bookmark">
+            <Comment />
           </IconButton>
           <IconButton aria-label="add to bookmark">
             <Bookmark />

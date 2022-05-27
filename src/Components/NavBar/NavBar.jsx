@@ -1,5 +1,5 @@
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
+import { styled} from "@mui/material/styles";
 import {
   AppBar,
   Button,
@@ -8,7 +8,6 @@ import {
   IconButton,
   Typography,
   InputBase,
-  Badge,
   Avatar,
   Tooltip,
   MenuItem,
@@ -19,16 +18,13 @@ import {
   Paper
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import CloseIcon from "@mui/icons-material/Close";
 import { ThemeProvider } from "@mui/material/styles";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { theme } from "../../theme";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
 import "./NavBar.css";
+import { Bookmark, Explore } from "@mui/icons-material";
 
 const style = {
   position: "absolute",
@@ -170,14 +166,10 @@ const NavBar = () => {
               <Box sx={{ flexGrow: 1 }} />
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
                 <IconButton size="large" aria-label="show 4 new mails">
-                  <Badge badgeContent={4} color="primary">
-                    <MailIcon color="" />
-                  </Badge>
+                    <Bookmark/>
                 </IconButton>
                 <IconButton size="large" aria-label="show 7 new notifications">
-                  <Badge badgeContent={7} color="primary">
-                    <NotificationsIcon />
-                  </Badge>
+                    <Explore />
                 </IconButton>
                 <IconButton size="large" onClick={handleOpen}>
                   <AddAPhotoIcon />

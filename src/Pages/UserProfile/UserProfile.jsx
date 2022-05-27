@@ -1,44 +1,23 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
+import { Avatar, Stack, Button, Typography } from "@mui/material";
 import { NavBar, PostCard, SuggestionsSideBar } from "../../Components";
-import Button from "@mui/material/Button";
 import { Box } from "@mui/system";
 import "./UserProfile.css";
 import { Link } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
-import { createTheme, IconButton } from "@mui/material";
-import { Paper } from "@mui/material";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import Typography from "@mui/material/Typography";
+import { EditProfile } from "../../Components";
+import { theme } from "../../theme";
 
 const UserProfile = () => {
-  const [dark, setDark] = React.useState(false);
-  const [darkDisplay, setDarkDisplay] = React.useState("block");
-  const [lightDisplay, setLightDisplay] = React.useState("none");
+  const [editModalOpen, setEditModalOpen] = React.useState(false);
 
-  const theme = createTheme({
-    palette: {
-      mode: dark ? "dark" : "light",
-    },
-  });
+  const handleEditModalOpen = () => setEditModalOpen(true);
+  const handleEditModalClose = () => setEditModalOpen(false);
 
-  const changeMode = () => {
-    setDark(!dark);
-
-    if (dark) {
-      setLightDisplay("none");
-      setDarkDisplay("block");
-    } else {
-      setLightDisplay("block");
-      setDarkDisplay("none");
-    }
-  };
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
-      <Paper className="user-profile-container">
+      <Box className="user-profile-container">
         <Box className="user-profile-inside-container">
           <Box
             sx={{
@@ -46,12 +25,14 @@ const UserProfile = () => {
               padding: "10px",
               display: "flex",
               flexDirection: "column",
-              marginLeft:'20px',
+              marginLeft: "20px",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Box sx={{borderRadius:'5px',marginTop:'16px', width:'800px' }}>
+            <Box
+              sx={{ borderRadius: "5px", marginTop: "16px", width: "800px" }}
+            >
               <Stack
                 direction="row"
                 spacing={2}
@@ -66,13 +47,33 @@ const UserProfile = () => {
                   sx={{ width: 80, height: 80 }}
                 />
 
-                <Button sx={{ left: "10px" }} variant="outlined">
+                <Button
+                  sx={{ left: "10px" }}
+                  variant="outlined"
+                  onClick={handleEditModalOpen}
+                >
                   Edit Profile
                 </Button>
+                <EditProfile
+                  handleEditModalClose={handleEditModalClose}
+                  editModalOpen={editModalOpen}
+                />
               </Stack>
               <Box className="user-details-container">
-                <Typography component="span" variant="span" className="original-name">Adarsh Balika</Typography>
-                <Typography component="span" variant="span" className="user-name">@adarshbalika</Typography>
+                <Typography
+                  component="span"
+                  variant="span"
+                  className="original-name"
+                >
+                  Adarsh Balika
+                </Typography>
+                <Typography
+                  component="span"
+                  variant="span"
+                  className="user-name"
+                >
+                  @adarshbalika
+                </Typography>
                 <Typography component="span" variant="span" className="bio">
                   Bio | More Bio | Some Bio | Work At | Previously Worked
                 </Typography>
@@ -80,9 +81,16 @@ const UserProfile = () => {
                   https://varnitamakrariya.netlify.app/
                 </Link>
                 <Box className="followers-details">
-                <Typography component="span" variant="span"> 1 post</Typography>
-                <Typography component="span" variant="span">1 follower</Typography>
-                <Typography component="span" variant="span">1 following</Typography>
+                  <Typography component="span" variant="span">
+                    {" "}
+                    1 post
+                  </Typography>
+                  <Typography component="span" variant="span">
+                    1 follower
+                  </Typography>
+                  <Typography component="span" variant="span">
+                    1 following
+                  </Typography>
                 </Box>
               </Box>
             </Box>
@@ -102,33 +110,21 @@ const UserProfile = () => {
               <PostCard />
             </Box>
 
-            <Box>
-              <IconButton>
-                <DarkModeIcon
-                  onClick={() => changeMode()}
-                  sx={{ display: `${darkDisplay}` }}
-                ></DarkModeIcon>
-                <LightModeIcon
-                  onClick={() => changeMode()}
-                  sx={{ display: `${lightDisplay}` }}
-                ></LightModeIcon>
-              </IconButton>
-            </Box>
+            <Box></Box>
           </Box>
 
           <Box
-           
             sx={{
               display: "flex",
               justifyContent: "flex-end",
               width: "29%",
-              margin:'0 30px'
+              margin: "0 0px",
             }}
           >
             <SuggestionsSideBar />
           </Box>
         </Box>
-      </Paper>
+      </Box>
     </ThemeProvider>
   );
 };
