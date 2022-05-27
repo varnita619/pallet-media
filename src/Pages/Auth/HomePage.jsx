@@ -16,7 +16,7 @@ import { theme } from "../../theme";
 import "./HomePage.css";
 import { authServices } from "../../Services/authServices";
 
-const HomePage = () => {
+export const HomePage = () => {
   const [login, setLogin] = React.useState({ username: "", password: "" });
   const { loginService } = authServices();
 
@@ -155,5 +155,3 @@ const HomePage = () => {
     </ThemeProvider>
   );
 };
-
-export { HomePage };

@@ -8,7 +8,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { EditProfile } from "../../Components";
 import { theme } from "../../theme";
 
-const UserProfile = () => {
+export const UserProfile = () => {
   const [editModalOpen, setEditModalOpen] = React.useState(false);
 
   const handleEditModalOpen = () => setEditModalOpen(true);
@@ -128,5 +128,3 @@ const UserProfile = () => {
     </ThemeProvider>
   );
 };
-
-export { UserProfile };

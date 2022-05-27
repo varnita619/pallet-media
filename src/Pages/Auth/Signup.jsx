@@ -16,7 +16,7 @@ import { theme } from "../../theme";
 import "./HomePage.css";
 import { authServices } from "../../Services/authServices";
 
-const Signup = () => {
+export const Signup = () => {
   const [formData, setFormData] = React.useState({
     firstName: "",
     lastName: "",
@@ -162,5 +162,3 @@ const Signup = () => {
     </ThemeProvider>
   );
 };
-
-export { Signup };

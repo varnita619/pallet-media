@@ -1,5 +1,5 @@
 import * as React from "react";
-import { styled} from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import {
   AppBar,
   Button,
@@ -15,7 +15,7 @@ import {
   Fade,
   Modal,
   Backdrop,
-  Paper
+  Paper,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
@@ -85,7 +85,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const settings = ["Profile", "Explore", "BookMark", "Liked Posts", "Logout"];
 
-const NavBar = () => {
+export const NavBar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -133,7 +133,11 @@ const NavBar = () => {
     <ThemeProvider theme={theme}>
       <Paper>
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static" color="inherit" sx={{borderBottom:'1px solid #d1d4d7'}}>
+          <AppBar
+            position="static"
+            color="inherit"
+            sx={{ borderBottom: "1px solid #d1d4d7" }}
+          >
             <Toolbar>
               <Box className="heading">
                 <Typography
@@ -166,10 +170,10 @@ const NavBar = () => {
               <Box sx={{ flexGrow: 1 }} />
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
                 <IconButton size="large" aria-label="show 4 new mails">
-                    <Bookmark/>
+                  <Bookmark />
                 </IconButton>
                 <IconButton size="large" aria-label="show 7 new notifications">
-                    <Explore />
+                  <Explore />
                 </IconButton>
                 <IconButton size="large" onClick={handleOpen}>
                   <AddAPhotoIcon />
@@ -225,7 +229,10 @@ const NavBar = () => {
                   </span>
                 </Typography>
                 <div className="input-container">
-                  <textarea style={{width:'100%'}} placeholder="Enter Your Text Here"></textarea>
+                  <textarea
+                    style={{ width: "100%" }}
+                    placeholder="Enter Your Text Here"
+                  ></textarea>
                 </div>
                 <div className="action-btn-container">
                   <label htmlFor="icon-button-file">
@@ -257,5 +264,3 @@ const NavBar = () => {
     </ThemeProvider>
   );
 };
-
-export { NavBar };

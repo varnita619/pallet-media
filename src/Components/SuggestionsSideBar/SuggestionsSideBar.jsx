@@ -7,10 +7,10 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import { Button } from "@mui/material";
 
-const SuggestionsSideBar = () => {
+export const SuggestionsSideBar = () => {
   return (
     <List
-    className="suggestions-main-container"
+      className="suggestions-main-container"
       dense
       sx={{
         width: "100%",
@@ -20,8 +20,8 @@ const SuggestionsSideBar = () => {
         paddingTop: 0,
         borderLeft: "2px solid #e6e1e1dd",
         position: "sticky",
-        top:'0',
-        padding:'1rem'
+        top: "0",
+        padding: "1rem",
       }}
     >
       <h3>Suggestions for you</h3>
@@ -47,5 +47,3 @@ const SuggestionsSideBar = () => {
     </List>
   );
 };
-
-export { SuggestionsSideBar };

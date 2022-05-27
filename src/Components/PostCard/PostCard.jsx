@@ -15,7 +15,7 @@ import { Bookmark, Comment } from "@mui/icons-material";
 import "./PostCard.css";
 import { EditDeletePost } from "../EditDeletePost/EditDeletePost";
 
-const PostCard = () => {
+export const PostCard = () => {
   const [editDeleteModalOpen, setEditDeleteModalOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -93,19 +93,16 @@ const PostCard = () => {
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
+            <IconButton
+              aria-label="settings"
+              onClick={handleEditDeleteModalOpen}
+            >
               <MoreVertIcon />
             </IconButton>
           }
           title="Adarsh Balika"
           subheader="May 14, 2022"
         />
-        {/* <CardMedia
-      component="img"
-      height="194"
-      image="https://res.cloudinary.com/dqgqdj4jf/image/upload/v1652794400/PalletGram/dlwsi7ad0cfisk1iob5a.jpg"
-      alt="Paella dish"
-    /> */}
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             This impressive place is named as giethoorn village. So your day in
@@ -131,5 +128,3 @@ const PostCard = () => {
     </>
   );
 };
-
-export { PostCard };

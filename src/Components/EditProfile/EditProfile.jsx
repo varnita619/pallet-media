@@ -13,7 +13,7 @@ const style = {
   p: 4,
 };
 
-const EditProfile = ({ handleEditModalClose, editModalOpen }) => {
+export const EditProfile = ({ handleEditModalClose, editModalOpen }) => {
   return (
     <>
       <Modal
@@ -50,16 +50,10 @@ const EditProfile = ({ handleEditModalClose, editModalOpen }) => {
                 padding: "2rem 0 0 0",
               }}
             >
-              <Typography
-                variant="h5"
-                component="h5"
-              >
+              <Typography variant="h5" component="h5">
                 Name
               </Typography>
-              <Typography
-                variant="h5"
-                component="h5"
-              >
+              <Typography variant="h5" component="h5">
                 John Doe
               </Typography>
             </Box>
@@ -70,16 +64,10 @@ const EditProfile = ({ handleEditModalClose, editModalOpen }) => {
                 alignItems: "center",
               }}
             >
-              <Typography
-                variant="p"
-                component="p"
-              >
+              <Typography variant="p" component="p">
                 Username
               </Typography>
-              <Typography
-                variant="p"
-                component="p"
-              >
+              <Typography variant="p" component="p">
                 johndoe
               </Typography>
             </Box>
@@ -128,5 +116,3 @@ const EditProfile = ({ handleEditModalClose, editModalOpen }) => {
     </>
   );
 };
-
-export { EditProfile };
