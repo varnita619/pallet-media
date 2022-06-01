@@ -28,7 +28,7 @@ export const SuggestionsSideBar = () => {
       {[0, 1, 2, 3].map((value) => {
         const labelId = `checkbox-list-secondary-label-${value}`;
         return (
-          <ListItem>
+          <ListItem key={value}>
             <ListItemButton>
               <ListItemAvatar>
                 <Avatar alt={`Avatar n°${value + 1}`} src="./img/user.jpg" />
@@ -37,7 +37,7 @@ export const SuggestionsSideBar = () => {
             </ListItemButton>
             <Button
               variant="contained"
-              sx={{ padding: "1.2px .7px", borderRadius: "5px" }}
+              sx={{ padding: "6px 10px", borderRadius: "5px" }}
             >
               Follow
             </Button>

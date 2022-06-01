@@ -26,6 +26,7 @@ import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { theme } from "../../theme";
 import "./NavBar.css";
 import { Bookmark, Explore } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -88,20 +89,20 @@ const settings = ["Profile", "Explore", "BookMark", "Liked Posts", "Logout"];
 
 export const NavBar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseUserMenu = () => {
+    navigate("/user-profile");
     setAnchorElUser(null);
   };
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const menuId = "primary-search-account-menu";
 
   const mobileMenuId = "primary-search-account-menu-mobile";
 
@@ -124,7 +125,9 @@ export const NavBar = () => {
     >
       {settings.map((setting) => (
         <MenuItem key={setting} onClick={handleCloseUserMenu}>
-          <Typography textAlign="center">{setting}</Typography>
+          <Typography variant="p" textAlign="center">
+            {setting}
+          </Typography>
         </MenuItem>
       ))}
     </Menu>
@@ -155,14 +158,19 @@ export const NavBar = () => {
                     },
                   }}
                 >
-                  <Link href="/user-profile" sx={{display: {
-                      backgroundColor: "neutral",
-                      fontStyle: "italic",
-                      fontWeight: "bold",
-                      fontSize: 30,
-                      cursor: "pointer",
-                      textDecoration:'none'
-                    },}}>
+                  <Link
+                    href="/explore"
+                    sx={{
+                      display: {
+                        backgroundColor: "neutral",
+                        fontStyle: "italic",
+                        fontWeight: "bold",
+                        fontSize: 30,
+                        cursor: "pointer",
+                        textDecoration: "none",
+                      },
+                    }}
+                  >
                     Palletgram
                   </Link>
                 </Typography>
@@ -180,14 +188,26 @@ export const NavBar = () => {
               </Box>
               <Box sx={{ flexGrow: 1 }} />
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                <IconButton size="large" aria-label="show 4 new mails">
-                  <Bookmark />
-                </IconButton>
-                <IconButton size="large" aria-label="show 7 new notifications">
+                <IconButton
+                  size="large"
+                  title="explore"
+                  onClick={() => navigate("/explore")}
+                >
                   <Explore />
                 </IconButton>
-                <IconButton size="large" onClick={handleOpen}>
+                <IconButton
+                  size="large"
+                  onClick={handleOpen}
+                  title="create post"
+                >
                   <AddAPhotoIcon />
+                </IconButton>
+                <IconButton
+                  size="large"
+                  title="bookmark"
+                  onClick={() => navigate("/explore")}
+                >
+                  <Bookmark />
                 </IconButton>
               </Box>
 

@@ -11,33 +11,28 @@ export const Explore = () => {
   }, [dispatch]);
 
   const { posts } = useSelector((state) => state.posts);
-  console.log(posts);
 
   return (
-    <>
+    <Box>
       <NavBar />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {posts.map((post) => (
-          <PostCard post={post} key={post._id} />
-        ))}
+      <Box className="user-profile-container">
+        <Box>
+          {posts.map((post) => (
+            <PostCard post={post} key={post._id} />
+          ))}
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "flex-end",
+            width: "39%",
+            margin: "0 0px",
+          }}
+        >
+          <SuggestionsSideBar />
+        </Box>
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          width: "29%",
-          margin: "0 0px",
-        }}
-      >
-        <SuggestionsSideBar />
-      </Box>
-    </>
+    </Box>
   );
 };
