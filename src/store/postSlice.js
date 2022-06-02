@@ -17,7 +17,6 @@ export const getAllPosts = createAsyncThunk('posts/getPosts', async () => {
 export const createNewPost = createAsyncThunk('posts/createPost', async ({ content, imgUrl, token }) => {
     try {
         const response = await axios.post('/api/posts', { postData: { content: content, imgUrl: imgUrl, token: token } }, { headers: { authorization: token } });
-        console.log(imgUrl)
         return response.data.posts;
     }
     catch (error) {

@@ -141,7 +141,8 @@ export const NavBar = () => {
     </Menu>
   );
 
-  const newPostHandler = () => {
+  const newPostHandler = (e) => {
+    e.preventDefault()
     if (postData.content === "") {
       toast.error("Please write something to post..");
     } else if (postData.imgUrl) {
@@ -172,8 +173,6 @@ export const NavBar = () => {
 
     setOpen(false);
   };
-
-  console.log(posts);
 
   return (
     <ThemeProvider theme={theme}>
@@ -345,7 +344,7 @@ export const NavBar = () => {
                       height: "2rem",
                       borderRadius: ".3rem",
                     }}
-                    onClick={() => newPostHandler()}
+                    onClick={(e) => newPostHandler(e)}
                   >
                     Post
                   </Button>

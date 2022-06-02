@@ -2,10 +2,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import { NavBar, PostCard, SuggestionsSideBar } from "../../Components";
-import { getAllPosts} from "../../store/postSlice";
+import { getAllPosts } from "../../store/postSlice";
 
 export const Explore = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getAllPosts());
   }, [dispatch]);

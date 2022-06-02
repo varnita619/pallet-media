@@ -5,14 +5,23 @@ import { Box } from "@mui/system";
 import "./UserProfile.css";
 import { Link } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { EditProfile } from "../../Components";
 import { theme } from "../../theme";
+import { getAllPosts } from "../../store/postSlice";
 
 export const UserProfile = () => {
   const [editModalOpen, setEditModalOpen] = React.useState(false);
 
   const handleEditModalOpen = () => setEditModalOpen(true);
   const handleEditModalClose = () => setEditModalOpen(false);
+  const { posts } = useSelector((state) => state.posts);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, [dispatch]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -107,7 +116,9 @@ export const UserProfile = () => {
                 gap: "2rem",
               }}
             >
-              <PostCard />
+              {posts?.map((post) => (
+                <PostCard post={post} key={post._id} />
+              ))}
             </Box>
 
             <Box></Box>
