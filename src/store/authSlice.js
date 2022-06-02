@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 // getting token and userInfo from local Storage
-const token = localStorage.getItem("login-token") || ""
+const token = localStorage.getItem("login-Token") || ""
 const userInfo = JSON.parse(localStorage.getItem("user")) || null
-
 const initialState = {
     userInfo: userInfo,
     token: token

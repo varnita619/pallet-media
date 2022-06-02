@@ -27,6 +27,9 @@ import { theme } from "../../theme";
 import "./NavBar.css";
 import { Bookmark, Explore } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { createNewPost } from "../../store/postSlice";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const style = {
   position: "absolute",
@@ -88,8 +91,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const settings = ["Profile", "Explore", "BookMark", "Liked Posts", "Logout"];
 
 export const NavBar = () => {
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
+  const { token } = useSelector((state) => state.auth);
+  const { posts } = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
+  const [postData, setPostData] = React.useState({ content: "", imgUrl: "" });
+
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -132,6 +140,40 @@ export const NavBar = () => {
       ))}
     </Menu>
   );
+
+  const newPostHandler = () => {
+    if (postData.content === "") {
+      toast.error("Please write something to post..");
+    } else if (postData.imgUrl) {
+      const file = postData.imgUrl;
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          dispatch(
+            createNewPost({
+              content: postData.content,
+              imgUrl: reader.result,
+              token: token,
+            })
+          );
+        }
+      };
+    } else {
+      dispatch(
+        createNewPost({
+          content: postData.content,
+          token: token,
+        })
+      );
+      toast.success("New Post added");
+    }
+    setPostData({ content: "", imgUrl: "" });
+
+    setOpen(false);
+  };
+
+  console.log(posts);
 
   return (
     <ThemeProvider theme={theme}>
@@ -260,14 +302,34 @@ export const NavBar = () => {
                   </span>
                 </Typography>
                 <div className="input-container">
-                  <textarea
+                  <Typography
+                    variant="textarea"
+                    component="textarea"
                     style={{ width: "100%", border: "none" }}
-                    placeholder="Enter Your Text Here"
-                  ></textarea>
+                    placeholder="What's Happening?"
+                    value={postData.content}
+                    onChange={(event) =>
+                      setPostData((prev) => ({
+                        ...prev,
+                        content: event.target.value,
+                      }))
+                    }
+                  ></Typography>
                 </div>
                 <div className="action-btn-container">
                   <label htmlFor="icon-button-file">
-                    <Input accept="image/*" id="icon-button-file" type="file" />
+                    <Input
+                      accept="image/*"
+                      id="icon-button-file"
+                      type="file"
+                      // value={postData.imgUrl}
+                      onChange={(event) =>
+                        setPostData((prev) => ({
+                          ...prev,
+                          imgUrl: event.target.files[0],
+                        }))
+                      }
+                    />
                     <IconButton
                       color="primary"
                       aria-label="upload picture"
@@ -283,6 +345,7 @@ export const NavBar = () => {
                       height: "2rem",
                       borderRadius: ".3rem",
                     }}
+                    onClick={() => newPostHandler()}
                   >
                     Post
                   </Button>

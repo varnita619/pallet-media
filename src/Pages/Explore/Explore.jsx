@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import { NavBar, PostCard, SuggestionsSideBar } from "../../Components";
-import { getAllPosts } from "../../store/postSlice";
+import { getAllPosts} from "../../store/postSlice";
 
 export const Explore = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export const Explore = () => {
       <NavBar />
       <Box className="user-profile-container">
         <Box>
-          {posts.map((post) => (
+          {posts?.map((post) => (
             <PostCard post={post} key={post._id} />
           ))}
         </Box>
