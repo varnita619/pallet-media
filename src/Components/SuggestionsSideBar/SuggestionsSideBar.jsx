@@ -6,9 +6,11 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import { Button } from "@mui/material";
+import { Box } from "@mui/material";
 
 export const SuggestionsSideBar = () => {
   return (
+    <Box display={{lg:'block', xs:'none'}}>
     <List
     className="suggestions-main-container"
       dense
@@ -28,6 +30,7 @@ export const SuggestionsSideBar = () => {
       {[0, 1, 2, 3].map((value) => {
         const labelId = `checkbox-list-secondary-label-${value}`;
         return (
+          
           <ListItem key={value}>
             <ListItemButton>
               <ListItemAvatar>
@@ -42,9 +45,11 @@ export const SuggestionsSideBar = () => {
               Follow
             </Button>
           </ListItem>
+          
         );
       })}
     </List>
+    </Box>
   );
 };
 

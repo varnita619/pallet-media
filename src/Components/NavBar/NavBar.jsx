@@ -92,8 +92,7 @@ const settings = ["Profile", "Explore", "BookMark", "Liked Posts", "Logout"];
 
 export const NavBar = () => {
   const navigate = useNavigate();
-  const { token } = useSelector((state) => state.auth);
-  const { posts } = useSelector((state) => state.posts);
+  const { userInfo, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [postData, setPostData] = React.useState({ content: "", imgUrl: "" });
   const [name, setName] = React.useState("");
@@ -104,8 +103,9 @@ export const NavBar = () => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
-    navigate("/user-profile");
+  const handleCloseUserMenu = (event) => {
+    console.log(event.target.innerText)
+    navigate(`/user-profile/${userInfo.username}`);
     setAnchorElUser(null);
   };
 
@@ -133,7 +133,12 @@ export const NavBar = () => {
       onClose={handleCloseUserMenu}
     >
       {settings.map((setting) => (
-        <MenuItem key={setting} onClick={handleCloseUserMenu}>
+        <MenuItem
+          key={setting}
+          onClick={(event) => {
+            handleCloseUserMenu(event);
+          }}
+        >
           <Typography variant="p" textAlign="center">
             {setting}
           </Typography>
