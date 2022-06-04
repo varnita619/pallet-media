@@ -19,7 +19,7 @@ import {
   Link,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import { ThemeProvider } from "@mui/material/styles";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
@@ -96,6 +96,7 @@ export const NavBar = () => {
   const { posts } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const [postData, setPostData] = React.useState({ content: "", imgUrl: "" });
+  const [name, setName] = React.useState("");
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -142,11 +143,12 @@ export const NavBar = () => {
   );
 
   const newPostHandler = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (postData.content === "") {
       toast.error("Please write something to post..");
     } else if (postData.imgUrl) {
       const file = postData.imgUrl;
+      setName(file.name);
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -199,21 +201,23 @@ export const NavBar = () => {
                     },
                   }}
                 >
-                  <Link
-                    href="/explore"
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate("/explore");
+                    }}
                     sx={{
                       display: {
-                        backgroundColor: "neutral",
                         fontStyle: "italic",
                         fontWeight: "bold",
                         fontSize: 30,
                         cursor: "pointer",
-                        textDecoration: "none",
+                        border: "none",
                       },
                     }}
                   >
                     Palletgram
-                  </Link>
+                  </Button>
                 </Typography>
               </Box>
               <Box className="searchBar">
@@ -232,7 +236,10 @@ export const NavBar = () => {
                 <IconButton
                   size="large"
                   title="explore"
-                  onClick={() => navigate("/explore")}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate("/explore");
+                  }}
                 >
                   <Explore />
                 </IconButton>
@@ -241,7 +248,7 @@ export const NavBar = () => {
                   onClick={handleOpen}
                   title="create post"
                 >
-                  <AddAPhotoIcon />
+                  <AddCircleIcon />
                 </IconButton>
                 <IconButton
                   size="large"
@@ -321,7 +328,6 @@ export const NavBar = () => {
                       accept="image/*"
                       id="icon-button-file"
                       type="file"
-                      // value={postData.imgUrl}
                       onChange={(event) =>
                         setPostData((prev) => ({
                           ...prev,
@@ -336,6 +342,7 @@ export const NavBar = () => {
                     >
                       <PhotoCamera />
                     </IconButton>
+                    {name}
                   </label>
                   <Button
                     variant="contained"

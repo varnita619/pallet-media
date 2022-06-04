@@ -92,13 +92,13 @@ export const UserProfile = () => {
                 <Box className="followers-details">
                   <Typography component="span" variant="span">
                     {" "}
-                    1 post
+                    2 post
                   </Typography>
                   <Typography component="span" variant="span">
-                    1 follower
+                    0 follower
                   </Typography>
                   <Typography component="span" variant="span">
-                    1 following
+                    0 following
                   </Typography>
                 </Box>
               </Box>
@@ -106,23 +106,14 @@ export const UserProfile = () => {
 
             {/* Post Cards */}
 
-            <Box
-              sx={{
-                margin: "2rem 0",
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "2rem",
-              }}
-            >
+            <Box>
               {posts?.map((post) => (
                 <PostCard post={post} key={post._id} />
               ))}
             </Box>
-
-            <Box></Box>
           </Box>
+
+          {/* Suggestion Box */}
 
           <Box
             sx={{
