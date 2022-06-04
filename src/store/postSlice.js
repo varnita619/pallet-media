@@ -1,7 +1,6 @@
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 import axios from "axios";
-import toast from "react-hot-toast";
-import { getPosts, createPost } from "../Services/postServices";
+import { getPosts, likedPostService, dislikedPostService } from "../Services/postServices";
 
 export const getAllPosts = createAsyncThunk('posts/getPosts', async () => {
     try {
@@ -17,6 +16,27 @@ export const getAllPosts = createAsyncThunk('posts/getPosts', async () => {
 export const createNewPost = createAsyncThunk('posts/createPost', async ({ content, imgUrl, token }) => {
     try {
         const response = await axios.post('/api/posts', { postData: { content: content, imgUrl: imgUrl, token: token } }, { headers: { authorization: token } });
+        return response.data.posts;
+    }
+    catch (error) {
+        console.log(error)
+    }
+})
+
+export const likedPosts = createAsyncThunk('posts/likedPosts', async ({ postId, token }) => {
+    try {
+        // console.log("Post ID",postId)
+        const response = await likedPostService(postId, token)
+        return response.data.posts;
+    }
+    catch (error) {
+        console.log(error)
+    }
+})
+
+export const dislikedPosts = createAsyncThunk('posts/dislikedPosts', async ({ postId, token }) => {
+    try {
+        const response = await dislikedPostService(postId, token)
         return response.data.posts;
     }
     catch (error) {
@@ -64,6 +84,34 @@ const postSlice = createSlice({
         [createNewPost.rejected]: (state) => {
             state.loader = false;
             state.error = "Error occured! Try again later";
+        },
+
+        // Liked Posts
+        [likedPosts.pending]: (state) => {
+            state.loader = true;
+        },
+
+        [likedPosts.fulfilled]: (state, action) => {
+            state.loader = false;
+            state.posts = action.payload
+        },
+
+        [likedPosts.rejected]: (state) => {
+            state.loader = false;
+        },
+
+        // Dislike Posts
+        [dislikedPosts.pending]: (state) => {
+            state.loader = true;
+        },
+
+        [dislikedPosts.fulfilled]: (state, action) => {
+            state.loader = false;
+            state.posts = action.payload
+        },
+
+        [dislikedPosts.rejected]: (state) => {
+            state.loader = false;
         },
 
     }

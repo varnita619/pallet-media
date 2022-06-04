@@ -8,7 +8,8 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
@@ -16,14 +17,22 @@ import { Comment } from "@mui/icons-material";
 import "./PostCard.css";
 import { EditDeletePost, CommentsModal } from "../../Components";
 import { useDispatch, useSelector } from "react-redux";
+import { likedPosts, dislikedPosts } from "../../store/postSlice";
 
 export const PostCard = ({ post }) => {
-  const { userInfo, token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const [editDeleteModalOpen, setEditDeleteModalOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [commentsModelOpen, setCommentsModelOpen] = React.useState(false);
+  const { content, _id, imgUrl, likes } = post;
+
+  const likesHandler = () => {
+    // e.preventDefault();
+    dispatch(likedPosts({ postId: _id, token: token }));
+    // console.log("ID",_id)
+  };
 
   function copy() {
     const el = document.createElement("input");
@@ -77,11 +86,11 @@ export const PostCard = ({ post }) => {
           anchorEl={anchorEl}
           handleEditDeleteModalClose={handleEditDeleteModalClose}
         />
-        {post?.imgUrl ? (
+        {imgUrl ? (
           <CardMedia
             component="img"
             height="250"
-            image={post?.imgUrl}
+            image={imgUrl}
             alt="Paella dish"
             sx={{ objectFit: "contain" }}
           />
@@ -90,14 +99,21 @@ export const PostCard = ({ post }) => {
         )}
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            {post?.content}
+            {content}
           </Typography>
         </CardContent>
 
         <CardActions disableSpacing>
-          {post?.likes?.likeCount}
-          <IconButton aria-label="add to favorites">
-            <FavoriteBorderIcon />
+          {likes?.likeCount}
+          <IconButton
+            aria-label="add to favorites"
+            onClick={() => likesHandler()}
+          >
+            {/* {likesHandler() ? ( */}
+              <FavoriteIcon sx={{ color: red[500] }} />
+            {/* ) : ( */}
+              <FavoriteBorderOutlinedIcon />
+            {/* )} */}
           </IconButton>
 
           <IconButton

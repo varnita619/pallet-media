@@ -23,7 +23,8 @@ export const getAllpostsHandler = function () {
 export const getPostHandler = function (schema, request) {
   const postId = request.params.postId;
   try {
-    const post = schema.posts.findBy({ _id: postId }).attrs;
+    const post = schema.posts.findBy({ id: postId }).attrs;
+
     return new Response(200, {}, { post });
   } catch (error) {
     return new Response(
@@ -78,6 +79,7 @@ export const createPostHandler = function (schema, request) {
       );
     }
     const { postData } = JSON.parse(request.requestBody);
+  
     const post = {
       _id: uuid(),
       ...postData,
@@ -89,6 +91,7 @@ export const createPostHandler = function (schema, request) {
       username: user.username,
       createdAt: formatDate(),
       updatedAt: formatDate(),
+      comments: []
     };
     this.db.posts.insert(post);
     return new Response(201, {}, { posts: this.db.posts });
