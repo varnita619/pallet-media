@@ -9,6 +9,6 @@ export const likedPostService = (postId, token) => {
     return axios.post(`/api/posts/like/${postId}`,{}, {headers: {authorization: token}})
 }
 
-export const dislikedPostService = () => {
+export const dislikedPostService = (postId, token) => {
     return axios.post(`/api/posts/dislike/${postId}`,{}, {headers: {authorization: token}})
 }

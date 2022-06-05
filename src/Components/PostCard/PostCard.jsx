@@ -20,28 +20,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { likedPosts, dislikedPosts } from "../../store/postSlice";
 
 export const PostCard = ({ post }) => {
-  const { token } = useSelector((state) => state.auth);
-
+  const { userInfo, token } = useSelector((state) => state.auth);
+  const { users } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const [editDeleteModalOpen, setEditDeleteModalOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [commentsModelOpen, setCommentsModelOpen] = React.useState(false);
   const { content, _id, imgUrl, likes } = post;
 
+  const likeByUser = () =>
+    post.likes.likedBy.filter((users) => users.username === userInfo.username)
+      .length !== 0;
+
   const likesHandler = () => {
-    // e.preventDefault();
-    dispatch(likedPosts({ postId: _id, token: token }));
-    // console.log("ID",_id)
+    if (likeByUser()) {
+      dispatch(dislikedPosts({ postId: _id, token: token }));
+    } else {
+      dispatch(likedPosts({ postId: _id, token: token }));
+    }
   };
 
   function copy() {
     const el = document.createElement("input");
-    el.value = `https://baatchit-social.netlify.app/post/` + post._id;
+    el.value = `` + post._id;
     document.body.appendChild(el);
     el.select();
     document.execCommand("copy");
     document.body.removeChild(el);
-    Notify("Copied to clipboard", "info");
   }
 
   const handleCommentsModelOpen = () => setCommentsModelOpen(true);
@@ -109,11 +114,11 @@ export const PostCard = ({ post }) => {
             aria-label="add to favorites"
             onClick={() => likesHandler()}
           >
-            {/* {likesHandler() ? ( */}
+            {likeByUser() ? (
               <FavoriteIcon sx={{ color: red[500] }} />
-            {/* ) : ( */}
+            ) : (
               <FavoriteBorderOutlinedIcon />
-            {/* )} */}
+            )}
           </IconButton>
 
           <IconButton
@@ -127,7 +132,7 @@ export const PostCard = ({ post }) => {
             <BookmarkBorderIcon />
           </IconButton>
 
-          <IconButton aria-label="share">
+          <IconButton aria-label="share" onClick={copy}>
             <ShareIcon />
           </IconButton>
         </CardActions>

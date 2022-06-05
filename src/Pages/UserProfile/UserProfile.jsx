@@ -21,8 +21,8 @@ export const UserProfile = () => {
     posts: { posts },
     users: { users },
   } = useSelector((state) => state);
-  const {userInfo, token} = useSelector((state)=> state.auth)
-  const {username} = useParams();
+  const { userInfo, token } = useSelector((state) => state.auth);
+  const { username } = useParams();
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -30,7 +30,9 @@ export const UserProfile = () => {
     dispatch(getAllPosts());
   }, [dispatch]);
 
-  const currentUserDetails = users?.find((userInfo) => userInfo.username === username);
+  const currentUserDetails = users?.find(
+    (userInfo) => userInfo.username === username
+  );
 
   return (
     <ThemeProvider theme={theme}>
@@ -44,7 +46,6 @@ export const UserProfile = () => {
                 padding: "10px",
                 display: "flex",
                 flexDirection: "column",
-                marginLeft: "20px",
                 justifyContent: "center",
                 alignItems: "center",
               }}
@@ -54,6 +55,7 @@ export const UserProfile = () => {
                   borderRadius: "5px",
                   marginTop: "16px",
                   width: "800px",
+                  boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
                 }}
               >
                 <Stack
@@ -88,7 +90,8 @@ export const UserProfile = () => {
                     variant="span"
                     className="original-name"
                   >
-                    {currentUserDetails?.firstName} {currentUserDetails?.lastName}
+                    {currentUserDetails?.firstName}{" "}
+                    {currentUserDetails?.lastName}
                   </Typography>
                   <Typography
                     component="span"
@@ -98,7 +101,7 @@ export const UserProfile = () => {
                     @{currentUserDetails?.username}
                   </Typography>
                   <Typography component="span" variant="span" className="bio">
-                   {currentUserDetails?.bio}
+                    {currentUserDetails?.bio}
                   </Typography>
                   <Link to="" className="web-link">
                     {currentUserDetails?.website}
@@ -116,7 +119,6 @@ export const UserProfile = () => {
                     </Typography>
                   </Box>
                 </Box>
-                ;
               </Box>
 
               {/* Post Cards */}
@@ -134,7 +136,6 @@ export const UserProfile = () => {
               sx={{
                 display: "flex",
                 justifyContent: "flex-end",
-                width: "29%",
                 margin: "0 0px",
               }}
             >

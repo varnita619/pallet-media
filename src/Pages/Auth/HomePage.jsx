@@ -26,7 +26,7 @@ export const HomePage = () => {
   };
 
   const loginAsGuestHandler = () => {
-    setLogin({ username: "adarshbalika", password: "adarshBalika123" });
+    setLogin({ username: "aron20", password: "aron123" });
   };
 
   return (
