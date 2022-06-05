@@ -27,6 +27,15 @@ export const PostCard = ({ post }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [commentsModelOpen, setCommentsModelOpen] = React.useState(false);
   const { content, _id, imgUrl, likes } = post;
+  const [currentUser, setCurrentUser] = React.useState(null);
+
+  React.useEffect(() => {
+    setCurrentUser(users.filter((userInfo) => userInfo.username === post.username)[0]);
+  }, [post, userInfo, users, currentUser]);
+
+  console.log(post)
+
+  console.log(currentUser)
 
   const likeByUser = () =>
     post.likes.likedBy.filter((users) => users.username === userInfo.username)
@@ -66,13 +75,12 @@ export const PostCard = ({ post }) => {
         commentsModelOpen={commentsModelOpen}
         handleCommentsModelClose={handleCommentsModelClose}
       />
-
       <Card className="card" sx={{ border: ".5px solid #e2e8f0" }}>
         <CardHeader
           className=""
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              AB
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src={currentUser?.avatar}>
+              {currentUser?.username}
             </Avatar>
           }
           action={
@@ -83,7 +91,7 @@ export const PostCard = ({ post }) => {
               <MoreVertIcon />
             </IconButton>
           }
-          title="Adarsh Balika"
+          title={currentUser?.firstName + ' ' + currentUser?.lastName}
           subheader="June 5, 2022"
         />
         <EditDeletePost

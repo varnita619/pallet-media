@@ -30,6 +30,7 @@ import { useNavigate } from "react-router-dom";
 import { createNewPost } from "../../store/postSlice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { logoutHandler } from "../../store/authSlice";
 
 const style = {
   position: "absolute",
@@ -104,8 +105,22 @@ export const NavBar = () => {
   };
 
   const handleCloseUserMenu = (event) => {
-    console.log(event.target.innerText)
+    if(event.target.innerText === "Profile"){
     navigate(`/user-profile/${userInfo.username}`);
+    }
+    if(event.target.innerText === "Explore"){
+      navigate('/explore');
+      }
+      if(event.target.innerText === "BookMark"){
+        navigate('/bookmark');
+        }
+        if(event.target.innerText === "Liked Posts"){
+          navigate('/likedposts');
+          }
+          if(event.target.innerText === "Logout"){
+            logoutHandler()
+            navigate('/');
+            }
     setAnchorElUser(null);
   };
 
@@ -273,7 +288,7 @@ export const NavBar = () => {
                   >
                     <Avatar
                       alt="Remy Sharp"
-                      src="./img/user.jpg"
+                      src={userInfo.avatar}
                       sx={{ width: 36, height: 36, ml: 1 }}
                     />
                   </IconButton>

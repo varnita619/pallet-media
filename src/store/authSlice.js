@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // getting token and userInfo from local Storage
 const token = localStorage.getItem("login-Token") || ""
@@ -7,6 +7,11 @@ const initialState = {
     userInfo: userInfo,
     token: token
 }
+
+export const logoutHandler = createAsyncThunk("auth/getLogout", () =>{
+    localStorage.removeItem("login-Token")
+    localStorage.removeItem("user")
+})
 
 const authSlice = createSlice({
     name: 'auth',

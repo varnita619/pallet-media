@@ -136,6 +136,7 @@ export const UserProfile = () => {
               sx={{
                 display: "flex",
                 justifyContent: "flex-end",
+                width: "39%",
                 margin: "0 0px",
               }}
             >
