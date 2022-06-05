@@ -7,7 +7,7 @@ import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
+import { red,grey} from "@mui/material/colors";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
@@ -79,7 +79,7 @@ export const PostCard = ({ post }) => {
         <CardHeader
           className=""
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src={currentUser?.avatar}>
+            <Avatar sx={{ bgcolor: grey[50] }} aria-label="recipe" src={currentUser?.avatar}>
               {currentUser?.username}
             </Avatar>
           }

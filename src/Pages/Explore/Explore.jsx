@@ -5,12 +5,14 @@ import { NavBar, PostCard, SuggestionsSideBar } from "../../Components";
 import { getAllPosts } from "../../store/postSlice";
 import { theme } from "../../theme";
 import { ThemeProvider } from "styled-components";
+import { getAllUsers } from "../../store/userSlice";
 
 export const Explore = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllPosts());
+    dispatch(getAllUsers());
   }, [dispatch]);
 
   const { posts } = useSelector((state) => state.posts);
