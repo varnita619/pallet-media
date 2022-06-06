@@ -7,21 +7,28 @@ import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red,grey} from "@mui/material/colors";
+import { red, grey } from "@mui/material/colors";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { Comment } from "@mui/icons-material";
 import "./PostCard.css";
 import { EditDeletePost, CommentsModal } from "../../Components";
 import { useDispatch, useSelector } from "react-redux";
-import { likedPosts, dislikedPosts } from "../../store/postSlice";
+import {
+  likedPosts,
+  dislikedPosts,
+  bookmarkPosts,
+  removeBookmarkPosts,
+} from "../../store/postSlice";
 
 export const PostCard = ({ post }) => {
   const { userInfo, token } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.users);
+  const { bookmark } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const [editDeleteModalOpen, setEditDeleteModalOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -30,22 +37,35 @@ export const PostCard = ({ post }) => {
   const [currentUser, setCurrentUser] = React.useState(null);
 
   React.useEffect(() => {
-    setCurrentUser(users.filter((userInfo) => userInfo.username === post.username)[0]);
+    setCurrentUser(
+      users.filter((userInfo) => userInfo.username === post.username)[0]
+    );
   }, [post, userInfo, users, currentUser]);
 
-  console.log(post)
-
-  console.log(currentUser)
-
-  const likeByUser = () =>
-    post.likes.likedBy.filter((users) => users.username === userInfo.username)
-      .length !== 0;
+  const likeByUser = () => {
+    return (
+      post.likes.likedBy.filter((users) => users.username === userInfo.username)
+        .length !== 0
+    );
+  };
 
   const likesHandler = () => {
     if (likeByUser()) {
       dispatch(dislikedPosts({ postId: _id, token: token }));
     } else {
       dispatch(likedPosts({ postId: _id, token: token }));
+    }
+  };
+
+  const bookmarkByUser = () => {
+    return bookmark.filter((postId) => postId === _id).length !== 0;
+  };
+
+  const bookmarksHandler = () => {
+    if (bookmarkByUser()) {
+      dispatch(removeBookmarkPosts({ postId: _id, token: token }));
+    } else {
+      dispatch(bookmarkPosts({ postId: _id, token: token }));
     }
   };
 
@@ -79,7 +99,11 @@ export const PostCard = ({ post }) => {
         <CardHeader
           className=""
           avatar={
-            <Avatar sx={{ bgcolor: grey[50] }} aria-label="recipe" src={currentUser?.avatar}>
+            <Avatar
+              sx={{ bgcolor: grey[50] }}
+              aria-label="recipe"
+              src={currentUser?.avatar}
+            >
               {currentUser?.username}
             </Avatar>
           }
@@ -91,7 +115,7 @@ export const PostCard = ({ post }) => {
               <MoreVertIcon />
             </IconButton>
           }
-          title={currentUser?.firstName + ' ' + currentUser?.lastName}
+          title={currentUser?.firstName + " " + currentUser?.lastName}
           subheader="June 5, 2022"
         />
         <EditDeletePost
@@ -104,7 +128,7 @@ export const PostCard = ({ post }) => {
             component="img"
             height="250"
             image={imgUrl}
-            alt="Paella dish"
+            alt="not uploaded"
             sx={{ objectFit: "contain" }}
           />
         ) : (
@@ -136,8 +160,11 @@ export const PostCard = ({ post }) => {
             <Comment />
           </IconButton>
 
-          <IconButton aria-label="add to bookmark">
-            <BookmarkBorderIcon />
+          <IconButton
+            aria-label="add to bookmark"
+            onClick={() => bookmarksHandler()}
+          >
+            {bookmarkByUser() ? <BookmarkIcon /> : <BookmarkBorderIcon />}
           </IconButton>
 
           <IconButton aria-label="share" onClick={copy}>

@@ -23,8 +23,6 @@ export const UserProfile = () => {
   } = useSelector((state) => state);
   const { userInfo, token } = useSelector((state) => state.auth);
   const { username } = useParams();
-  console.log(userInfo,posts)
-
 
   const dispatch = useDispatch();
   useEffect(() => {

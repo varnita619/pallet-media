@@ -1,6 +1,7 @@
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 import axios from "axios";
-import { getPosts, likedPostService, dislikedPostService } from "../Services/postServices";
+import toast from "react-hot-toast";
+import { getPosts, likedPostService, dislikedPostService, bookmarkService, removeBookmarkService } from "../Services/postServices";
 
 export const getAllPosts = createAsyncThunk('posts/getPosts', async () => {
     try {
@@ -25,7 +26,6 @@ export const createNewPost = createAsyncThunk('posts/createPost', async ({ conte
 
 export const likedPosts = createAsyncThunk('posts/likedPosts', async ({ postId, token }) => {
     try {
-        // console.log("Post ID",postId)
         const response = await likedPostService(postId, token)
         return response.data.posts;
     }
@@ -44,11 +44,33 @@ export const dislikedPosts = createAsyncThunk('posts/dislikedPosts', async ({ po
     }
 })
 
+export const bookmarkPosts = createAsyncThunk('posts/bookmarkPosts', async ({ postId, token }) => {
+    try {
+        const response = await bookmarkService(postId, token)
+        toast.success("Post added to BookMark", { position: "top-right" })
+        return response.data.bookmarks;
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+export const removeBookmarkPosts = createAsyncThunk('posts/removeBookmarkPosts', async ({ postId, token }) => {
+    try {
+        const response = await removeBookmarkService(postId, token)
+        toast.success("Post removed from BookMark", { position: "top-right" })
+        return response.data.bookmarks;
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
 
 const initialState = {
     loader: false,
     error: "",
-    posts: []
+    posts: [],
+    bookmark:[]
 }
 
 const postSlice = createSlice({
@@ -111,6 +133,34 @@ const postSlice = createSlice({
         },
 
         [dislikedPosts.rejected]: (state) => {
+            state.loader = false;
+        },
+
+        // BookMark Posts
+        [bookmarkPosts.pending]: (state) => {
+            state.loader = true;
+        },
+
+        [bookmarkPosts.fulfilled]: (state, action) => {
+            state.loader = false;
+            state.bookmark = action.payload
+        },
+
+        [bookmarkPosts.rejected]: (state) => {
+            state.loader = false;
+        },
+
+        // Remove BookMark Posts
+        [removeBookmarkPosts.pending]: (state) => {
+            state.loader = true;
+        },
+
+        [removeBookmarkPosts.fulfilled]: (state, action) => {
+            state.loader = false;
+            state.bookmark = action.payload
+        },
+
+        [removeBookmarkPosts.rejected]: (state) => {
             state.loader = false;
         },
 

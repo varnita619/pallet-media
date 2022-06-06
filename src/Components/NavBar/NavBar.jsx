@@ -273,7 +273,7 @@ export const NavBar = () => {
                 <IconButton
                   size="large"
                   title="bookmark"
-                  onClick={() => navigate("/explore")}
+                  onClick={() => navigate("/bookmark")}
                 >
                   <Bookmark />
                 </IconButton>
