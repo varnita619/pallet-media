@@ -23,7 +23,7 @@ const authServices = () => {
                 toast.success(`Welcome ${login.username}`, {
                     position: "top-right"
                 });
-                navigate("/user-profile")
+                navigate(`/user-profile/${login.username}`)
 
                 //Updating initial States
                 dispatch(authInfo(foundUser));
@@ -37,7 +37,6 @@ const authServices = () => {
     }
 
     const signupService = async (formData) => {
-        console.log(formData)
         try {
             const {
                 status,
