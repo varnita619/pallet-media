@@ -57,7 +57,6 @@ export const Bookmark = () => {
                 <Typography
                   sx={{
                     textAlign: "center",
-                    margin: "20px 0",
                     fontWeight: "250",
                   }}
                   variant="h5"
