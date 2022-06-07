@@ -41,7 +41,6 @@ const style = {
   bgcolor: "background.paper",
   border: ".5px solid #000",
   borderRadius: "8px",
-  boxShadow: 24,
   p: 4,
 };
 

@@ -67,7 +67,6 @@ export const UpdatePostModal = ({
         }
       };
     } else {
-      console.log("sjsuidfhi")
       dispatch(
         editPost({
           id: post._id,

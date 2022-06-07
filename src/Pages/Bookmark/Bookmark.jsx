@@ -10,13 +10,6 @@ export const Bookmark = () => {
 
   const { bookmark, posts } = useSelector((state) => state.posts);
 
-  // const bookMarkedPosts = () => {
-  //   bookmark.map((eachBookMark)=>{
-  //     return posts.find((post)=> post._id === eachBookMark)
-  //   })
-  // //  return posts.filter((post) => post._id === postId)[0];
-  // };
-
   const bookmarkPost = bookmark.map((eachBookMark) => {
     return posts.find((post) => post._id === eachBookMark);
   });

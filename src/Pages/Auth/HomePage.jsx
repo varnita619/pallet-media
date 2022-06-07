@@ -19,6 +19,7 @@ import { authServices } from "../../Services/authServices";
 export const HomePage = () => {
   const [login, setLogin] = React.useState({ username: "", password: "" });
   const { loginService } = authServices();
+  const loginAsGuest = { username: "aron20", password: "aron123" };
 
   const loginHandler = (e) => {
     e.preventDefault();
@@ -26,7 +27,8 @@ export const HomePage = () => {
   };
 
   const loginAsGuestHandler = () => {
-    setLogin({ username: "aron20", password: "aron123" });
+    loginService(loginAsGuest)
+    setLogin(loginAsGuest)
   };
 
   return (
@@ -114,9 +116,7 @@ export const HomePage = () => {
                 Login
               </Button>
               <Box sx={{ textAlign: "center" }}>
-                <Button onClick={(e) => loginAsGuestHandler(e)}>
-                  Login As Guest
-                </Button>
+                <Button onClick={(e) => loginAsGuestHandler(e)}>Login As Guest</Button>
               </Box>
               <Grid container>
                 <Grid item xs>
