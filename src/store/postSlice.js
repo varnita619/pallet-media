@@ -1,7 +1,7 @@
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 import axios from "axios";
 import toast from "react-hot-toast";
-import { getPosts, likedPostService, dislikedPostService, bookmarkService, removeBookmarkService } from "../Services/postServices";
+import { getPosts, likedPostService, dislikedPostService, bookmarkService, removeBookmarkService, editPostServices, deletePostServices } from "../Services/postServices";
 
 export const getAllPosts = createAsyncThunk('posts/getPosts', async () => {
     try {
@@ -23,6 +23,7 @@ export const createNewPost = createAsyncThunk('posts/createPost', async ({ conte
         console.log(error)
     }
 })
+
 
 export const likedPosts = createAsyncThunk('posts/likedPosts', async ({ postId, token }) => {
     try {
@@ -64,13 +65,31 @@ export const removeBookmarkPosts = createAsyncThunk('posts/removeBookmarkPosts',
     }
 })
 
+export const editPost = createAsyncThunk('/posts/editPosts', async ({ id, content, imgUrl, token }) => {
+    try {
+        const response = await axios.post(`/api/posts/edit/${id}`, { postData: { content: content, imgUrl: imgUrl, token: token } }, { headers: { authorization: token } })
+        return response.data.posts;
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+export const deletePost = createAsyncThunk('/posts/deletePosts', async ({ postId, token }) => {
+    try {
+        const response = await deletePostServices(postId, token)
+        return response.data.posts;
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 
 
 const initialState = {
     loader: false,
     error: "",
     posts: [],
-    bookmark:[]
+    bookmark: []
 }
 
 const postSlice = createSlice({
@@ -161,6 +180,34 @@ const postSlice = createSlice({
         },
 
         [removeBookmarkPosts.rejected]: (state) => {
+            state.loader = false;
+        },
+
+        // Remove BookMark Posts
+        [editPost.pending]: (state) => {
+            state.loader = true;
+        },
+
+        [editPost.fulfilled]: (state, action) => {
+            state.loader = false;
+            state.posts = action.payload
+        },
+
+        [editPost.rejected]: (state) => {
+            state.loader = false;
+        },
+
+        // Remove BookMark Posts
+        [deletePost.pending]: (state) => {
+            state.loader = true;
+        },
+
+        [deletePost.fulfilled]: (state, action) => {
+            state.loader = false;
+            state.posts = action.payload
+        },
+
+        [deletePost.rejected]: (state) => {
             state.loader = false;
         },
 

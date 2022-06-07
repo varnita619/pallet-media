@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EditProfile } from "../../Components";
 import { theme } from "../../theme";
-import { getAllPosts } from "../../store/postSlice";
+import { getAllPosts, editPost, deletePost } from "../../store/postSlice";
 import { getAllUsers } from "../../store/userSlice";
 
 export const UserProfile = () => {
@@ -21,7 +21,6 @@ export const UserProfile = () => {
     posts: { posts },
     users: { users },
   } = useSelector((state) => state);
-  const { userInfo, token } = useSelector((state) => state.auth);
   const { username } = useParams();
 
   const dispatch = useDispatch();
@@ -122,12 +121,15 @@ export const UserProfile = () => {
               </Box>
 
               {/* Post Cards */}
-
-              <Box>
-                {posts?.map((post) => (
-                  <PostCard post={post} key={post._id} />
-                ))}
-              </Box>
+              {posts.length === 0 ? (
+                <Typography variant="h3" component='h3' sx={{padding:'10px'}}>No Posts Yet!</Typography>
+              ) : (
+                <Box>
+                  {posts?.map((post) => (
+                    <PostCard post={post} key={post._id} />
+                  ))}
+                </Box>
+              )}
             </Box>
 
             {/* Suggestion Box */}

@@ -4,3 +4,4 @@ export { SuggestionsSideBar } from "./SuggestionsSideBar/SuggestionsSideBar";
 export {EditProfile} from "./EditProfile/EditProfile";
 export {EditDeletePost} from "./EditDeletePost/EditDeletePost";
 export {CommentsModal} from "./CommentsModal/CommentsModal";
+export {UpdatePostModal} from "./UpdatePostModal/UpdatePostModal";

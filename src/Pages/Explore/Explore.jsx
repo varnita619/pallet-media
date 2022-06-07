@@ -6,6 +6,7 @@ import { getAllPosts } from "../../store/postSlice";
 import { theme } from "../../theme";
 import { ThemeProvider } from "styled-components";
 import { getAllUsers } from "../../store/userSlice";
+import { Typography } from "@mui/material";
 
 export const Explore = () => {
   const dispatch = useDispatch();
@@ -34,12 +35,15 @@ export const Explore = () => {
             }}
           >
             {/* Post Cards */}
-
+            {posts.length === 0 ? (
+                <Typography variant="h3" component='h3' >Be the first one to post.</Typography>
+              ) : (
             <Box>
               {posts?.map((post) => (
                 <PostCard post={post} key={post._id} />
               ))}
             </Box>
+              )}
           </Box>
 
           {/* Suggestion Box */}

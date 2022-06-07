@@ -122,6 +122,7 @@ export const PostCard = ({ post }) => {
           editDeleteModalOpen={editDeleteModalOpen}
           anchorEl={anchorEl}
           handleEditDeleteModalClose={handleEditDeleteModalClose}
+          post={post}
         />
         {imgUrl ? (
           <CardMedia
