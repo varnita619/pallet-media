@@ -1,5 +1,8 @@
 import * as React from "react";
 import { Button, Box, Typography, Fade, Modal, Backdrop } from "@mui/material";
+import { postComments } from "../../store/postSlice";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 
 const style = {
   position: "absolute",
@@ -16,7 +19,25 @@ const style = {
 export const CommentsModal = ({
   handleCommentsModelClose,
   commentsModelOpen,
+  post
 }) => {
+  const [commentData, setCommentData] = React.useState('')
+  const dispatch = useDispatch();
+  const {token} = useSelector((state) => state.auth);
+
+  const commentsByUser = () =>{
+    if(commentData === ''){
+      toast.error("Please write something to comment.", {position:"top-right"})
+    }
+    else{
+        dispatch(postComments({postId: post._id, commentData: commentData, token: token }))
+        toast.success("Comment added.", {position:"top-right"})
+    }
+    setCommentData("")
+    handleCommentsModelClose()
+  }
+
+
   return (
     <>
       <Modal
@@ -46,6 +67,8 @@ export const CommentsModal = ({
                 component="textarea"
                 style={{ width: "100%", border: "none" }}
                 placeholder="Enter Your Text Here"
+                value={commentData}
+                onChange={(e) => setCommentData(e.target.value)}
               ></Typography>
             </Box>
             <div className="action-btn-container">
@@ -57,6 +80,7 @@ export const CommentsModal = ({
                   height: "2rem",
                   borderRadius: ".3rem",
                 }}
+                onClick={() => commentsByUser()}
               >
                 Post
               </Button>

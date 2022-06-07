@@ -1,7 +1,7 @@
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 import axios from "axios";
 import toast from "react-hot-toast";
-import { getPosts, likedPostService, dislikedPostService, bookmarkService, removeBookmarkService, editPostServices, deletePostServices } from "../Services/postServices";
+import { getPosts, likedPostService, dislikedPostService, bookmarkService, removeBookmarkService, editPostServices, deletePostServices, postCommentsServices, editCommentsServices, deleteCommentsServices } from "../Services/postServices";
 
 export const getAllPosts = createAsyncThunk('posts/getPosts', async () => {
     try {
@@ -82,6 +82,39 @@ export const deletePost = createAsyncThunk('/posts/deletePosts', async ({ postId
         console.log(error)
     }
 })
+
+export const postComments = createAsyncThunk('/posts/postComments', async ({ postId, commentData, token }) => {
+    try {
+        const response = await postCommentsServices(postId, commentData, token)
+        return response.data.posts;
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+export const editComments = createAsyncThunk(
+    'posts/editComments',
+    async ({ postId, commentId, commentData, token }) => {
+      try {
+        const response = await editCommentsServices(postId, commentId, commentData, token);
+        return response.data.posts;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  );
+  
+  export const deleteComments = createAsyncThunk(
+    'posts/deleteComments',
+    async ({ postId, commentId, token}) => {
+      try {
+        const response = await deleteCommentsServices(postId, commentId, token);
+        return response.data.posts;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  );
 
 
 
@@ -211,10 +244,52 @@ const postSlice = createSlice({
             state.loader = false;
         },
 
+        // Post Comments
+        [postComments.pending]: (state) => {
+            state.loader = true;
+        },
+
+        [postComments.fulfilled]: (state, action) => {
+            state.loader = false;
+            state.posts = action.payload
+        },
+
+        [postComments.rejected]: (state) => {
+            state.loader = false;
+        },
+
+         // Edit Comments
+         [editComments.pending]: (state) => {
+            state.loader = true;
+        },
+
+        [editComments.fulfilled]: (state, action) => {
+            state.loader = false;
+            state.posts = action.payload
+        },
+
+        [editComments.rejected]: (state) => {
+            state.loader = false;
+        },
+
+         // Delete Comments
+         [deleteComments.pending]: (state) => {
+            state.loader = true;
+        },
+
+        [deleteComments.fulfilled]: (state, action) => {
+            state.loader = false;
+            state.posts = action.payload
+        },
+
+        [deleteComments.rejected]: (state) => {
+            state.loader = false;
+        },
+
     }
 })
 
-export const { getNewPost } = postSlice.actions;
+export const { } = postSlice.actions;
 
 export default postSlice.reducer;
 

@@ -29,6 +29,24 @@ export const postCommentsServices = (postId, commentData, token) => {
     return axios.post(`/api/comments/add/${postId}`, { commentData }, { headers: { authorization: token, }, },);
 }
 
+export const editCommentsServices = (postId, commentId, commentData, token) =>
+  axios.post(
+    `/api/comments/edit/${postId}/${commentId}`,
+    { commentData },
+    {
+      headers: {
+        authorization: token,
+      },
+    },
+  );
+
+export const deleteCommentsServices = (postId, commentId, token) =>
+  axios.delete(`/api/comments/delete/${postId}/${commentId}`, {
+    headers: {
+      authorization: token,
+    },
+  });
+
 export const deletePostServices = (postId, token) =>{
     return axios.delete(`/api/posts/${postId}`,{headers: {authorization: token}})
 }
