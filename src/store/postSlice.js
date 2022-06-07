@@ -183,7 +183,7 @@ const postSlice = createSlice({
             state.loader = false;
         },
 
-        // Remove BookMark Posts
+        // Edit Posts
         [editPost.pending]: (state) => {
             state.loader = true;
         },
@@ -197,7 +197,7 @@ const postSlice = createSlice({
             state.loader = false;
         },
 
-        // Remove BookMark Posts
+        // Delete Posts
         [deletePost.pending]: (state) => {
             state.loader = true;
         },
