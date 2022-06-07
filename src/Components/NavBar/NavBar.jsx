@@ -89,7 +89,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const settings = ["Profile", "Explore", "BookMark", "Liked Posts", "Logout"];
+const settings = ["Profile", "Explore", "BookMark", "Logout"];
 
 export const NavBar = () => {
   const navigate = useNavigate();
@@ -105,22 +105,19 @@ export const NavBar = () => {
   };
 
   const handleCloseUserMenu = (event) => {
-    if(event.target.innerText === "Profile"){
-    navigate(`/user-profile/${userInfo.username}`);
+    if (event.target.innerText === "Profile") {
+      navigate(`/user-profile/${userInfo.username}`);
     }
-    if(event.target.innerText === "Explore"){
-      navigate('/explore');
-      }
-      if(event.target.innerText === "BookMark"){
-        navigate('/bookmark');
-        }
-        if(event.target.innerText === "Liked Posts"){
-          navigate('/likedposts');
-          }
-          if(event.target.innerText === "Logout"){
-            logoutHandler()
-            navigate('/');
-            }
+    if (event.target.innerText === "Explore") {
+      navigate("/explore");
+    }
+    if (event.target.innerText === "BookMark") {
+      navigate("/bookmark");
+    }
+    if (event.target.innerText === "Logout") {
+      logoutHandler();
+      navigate("/");
+    }
     setAnchorElUser(null);
   };
 

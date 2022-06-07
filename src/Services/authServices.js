@@ -37,7 +37,6 @@ const authServices = () => {
     }
 
     const signupService = async (formData) => {
-        console.log(formData)
         try {
             const {
                 status,
