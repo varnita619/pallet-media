@@ -44,7 +44,7 @@ export const UpdatePostModal = ({
   const dispatch = useDispatch();
   const [postData, setPostData] = React.useState({
     content: post?.content,
-    imgUrl: post?.imgUrl,
+    imgUrl: '',
   });
   const [name, setName] = React.useState("");
 
@@ -67,6 +67,7 @@ export const UpdatePostModal = ({
         }
       };
     } else {
+      console.log("sjsuidfhi")
       dispatch(
         editPost({
           id: post._id,
@@ -74,11 +75,11 @@ export const UpdatePostModal = ({
           token: token,
         })
       );
-      toast.success("Post Updated");
-      handleUpdatePostModalClose()
+    
     }
+    toast.success("Post Updated");
+    handleUpdatePostModalClose()
   };
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -146,7 +147,7 @@ export const UpdatePostModal = ({
                     >
                       <PhotoCamera />
                     </IconButton>
-                    {name}
+                    {postData?.imgUrl?.name}
                   </label>
                   <Button
                     variant="contained"

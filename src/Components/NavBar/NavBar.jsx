@@ -359,7 +359,7 @@ export const NavBar = () => {
                     >
                       <PhotoCamera />
                     </IconButton>
-                    {name}
+                    {postData?.imgUrl?.name}
                   </label>
                   <Button
                     variant="contained"
