@@ -7,10 +7,22 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import { Button } from "@mui/material";
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { followUser } from "../../store/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export const SuggestionsSideBar = () => {
   const { users } = useSelector((state) => state.users);
+  const {userInfo, token} = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  let userSuggestion = users.filter(
+    (currUser) =>
+      !userInfo.following.find((innerCurrUser) => innerCurrUser._id === currUser._id) &&
+      currUser.username !== userInfo.username,
+  );
+
   return (
     <Box display={{ lg: "block", xs: "none" }}>
       <List
@@ -29,18 +41,18 @@ export const SuggestionsSideBar = () => {
         }}
       >
         <h3>Suggestions for you</h3>
-        {users.map((value) => {
+        {userSuggestion.map((users) => {
           return (
-            <ListItem key={value.id}>
-              <ListItemButton>
+            <ListItem key={users._id}>
+              <ListItemButton onClick={() => navigate(`/user-profile/${users.username}`)}>
                 <ListItemAvatar>
-                  <Avatar alt={value.username} src={value.avatar} />
+                  <Avatar alt={users.username} src={users.avatar} />
                 </ListItemAvatar>
                 <ListItemText
-                  primary={value.firstName + " " + value.lastName}
+                  primary={users.firstName + " " + users.lastName}
                 />
               </ListItemButton>
-              <Button
+              <Button onClick={() => dispatch(followUser({followUserId: users._id, token: token }))}
                 variant="contained"
                 sx={{ padding: "6px 10px", borderRadius: "5px" }}
               >

@@ -327,7 +327,7 @@ export const NavBar = () => {
                   <Typography
                     variant="textarea"
                     component="textarea"
-                    style={{ width: "100%", border: "none" }}
+                    style={{ width: "100%", border: "none", resize:'none' }}
                     placeholder="What's Happening?"
                     value={postData.content}
                     onChange={(event) =>

@@ -16,7 +16,7 @@ import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { theme } from "../../theme";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { editPost, deletePost } from "../../store/postSlice";
+import { editPost } from "../../store/postSlice";
 
 const style = {
   position: "absolute",

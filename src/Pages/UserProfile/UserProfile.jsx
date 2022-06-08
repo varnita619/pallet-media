@@ -1,6 +1,12 @@
 import * as React from "react";
 import { Avatar, Stack, Button, Typography } from "@mui/material";
-import { NavBar, PostCard, SuggestionsSideBar } from "../../Components";
+import {
+  NavBar,
+  PostCard,
+  SuggestionsSideBar,
+  FollowersModal,
+  FollowingModal,
+} from "../../Components";
 import { Box } from "@mui/system";
 import "./UserProfile.css";
 import { Link, useParams } from "react-router-dom";
@@ -9,17 +15,27 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EditProfile } from "../../Components";
 import { theme } from "../../theme";
-import { getAllPosts, editPost, deletePost } from "../../store/postSlice";
-import { getAllUsers } from "../../store/userSlice";
+import { getAllPosts } from "../../store/postSlice";
+import { followUser, getAllUsers, unfollowUser } from "../../store/userSlice";
 
 export const UserProfile = () => {
   const [editModalOpen, setEditModalOpen] = React.useState(false);
+  const [followersModalOpen, setFollowersModalOpen] = React.useState(false);
+  const [followingModalOpen, setFollowingModalOpen] = React.useState(false);
 
   const handleEditModalOpen = () => setEditModalOpen(true);
   const handleEditModalClose = () => setEditModalOpen(false);
+
+  const handleFollowersModalOpen = () => setFollowersModalOpen(true);
+  const handleFollowersModalClose = () => setFollowersModalOpen(false);
+
+  const handleFollowingModalOpen = () => setFollowingModalOpen(true);
+  const handleFollowingModalClose = () => setFollowingModalOpen(false);
+
   const {
     posts: { posts },
     users: { users },
+    auth: { userInfo, token },
   } = useSelector((state) => state);
   const { username } = useParams();
 
@@ -29,9 +45,28 @@ export const UserProfile = () => {
     dispatch(getAllPosts());
   }, [dispatch]);
 
+  const currentUserPosts = posts.filter(
+    (eachPost) => eachPost.username === userInfo.username
+  );
+
   const currentUserDetails = users?.find(
     (userInfo) => userInfo.username === username
   );
+
+  const isFollowed = () =>
+    currentUserDetails?.followers.some(
+      (users) => users.username === userInfo.username
+    );
+
+  const followUnfollowHandler = () => {
+    isFollowed()
+      ? dispatch(
+          unfollowUser({ followUserId: currentUserDetails?._id, token: token })
+        )
+      : dispatch(
+          followUser({ followUserId: currentUserDetails?._id, token: token })
+        );
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -70,14 +105,24 @@ export const UserProfile = () => {
                     src={currentUserDetails?.avatar}
                     sx={{ width: 80, height: 80 }}
                   />
-
-                  <Button
-                    sx={{ left: "10px" }}
-                    variant="outlined"
-                    onClick={handleEditModalOpen}
-                  >
-                    Edit Profile
-                  </Button>
+                  {userInfo?.username === currentUserDetails?.username && (
+                    <Button
+                      sx={{ left: "10px" }}
+                      variant="outlined"
+                      onClick={handleEditModalOpen}
+                    >
+                      Edit Profile
+                    </Button>
+                  )}
+                  {userInfo.username !== currentUserDetails.username && (
+                    <Button
+                      variant="outlined"
+                      sx={{ left: "10px" }}
+                      onClick={followUnfollowHandler}
+                    >
+                      {isFollowed() ? "Following" : "Follow"}
+                    </Button>
+                  )}
                   <EditProfile
                     handleEditModalClose={handleEditModalClose}
                     editModalOpen={editModalOpen}
@@ -106,29 +151,42 @@ export const UserProfile = () => {
                     {currentUserDetails?.website}
                   </Link>
                   <Box className="followers-details">
-                    <Typography component="span" variant="span">
-                      {" "}
-                      2 post
-                    </Typography>
-                    <Typography component="span" variant="span">
-                      0 follower
-                    </Typography>
-                    <Typography component="span" variant="span">
-                      0 following
-                    </Typography>
+                    <Button sx={{ color: "black" }}>
+                      {currentUserPosts?.length} post
+                    </Button>
+
+                    <Button
+                      sx={{ color: "black" }}
+                      onClick={handleFollowersModalOpen}
+                    >
+                      {currentUserDetails?.followers.length} follower
+                    </Button>
+
+                    <Button
+                      sx={{ color: "black" }}
+                      onClick={handleFollowingModalOpen}
+                    >
+                      {currentUserDetails?.following.length} following
+                    </Button>
                   </Box>
                 </Box>
               </Box>
 
               {/* Post Cards */}
-              {posts.length === 0 ? (
-                <Typography variant="h3" component='h3' sx={{padding:'10px'}}>No Posts Yet!</Typography>
-              ) : (
+              {currentUserPosts.length !== 0 ? (
                 <Box>
-                  {posts?.map((post) => (
+                  {currentUserPosts.map((post) => (
                     <PostCard post={post} key={post._id} />
                   ))}
                 </Box>
+              ) : (
+                <Typography
+                  variant="h3"
+                  component="h3"
+                  sx={{ padding: "10px" }}
+                >
+                  No Posts Yet!
+                </Typography>
               )}
             </Box>
 
@@ -144,6 +202,17 @@ export const UserProfile = () => {
             >
               <SuggestionsSideBar />
             </Box>
+
+            <FollowersModal
+              followersModalOpen={followersModalOpen}
+              handleFollowersModalClose={handleFollowersModalClose}
+              followers = {currentUserDetails?.followers}
+            />
+            <FollowingModal
+              followingModalOpen={followingModalOpen}
+              handleFollowingModalClose={handleFollowingModalClose}
+              following = {currentUserDetails?.following}
+            />
           </Box>
         </Box>
       )}

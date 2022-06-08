@@ -1,5 +1,9 @@
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { Avatar, Box, Button, Input, Modal, Typography } from "@mui/material";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { editProfile } from "../../store/userSlice";
+import toast from "react-hot-toast";
 
 const style = {
   position: "absolute",
@@ -14,6 +18,43 @@ const style = {
 };
 
 export const EditProfile = ({ handleEditModalClose, editModalOpen }) => {
+  const dispatch = useDispatch();
+  const { userInfo, token } = useSelector((state) => state.auth);
+  const [userData, setUserData] = useState({
+    bio: userInfo.bio,
+    website: userInfo.website,
+    avatar: userInfo.avatar,
+  });
+
+  const updateImage = (img) => {
+    const file = img;
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setUserData((prev) => ({
+          ...prev,
+          avatar: reader.result,
+        }));
+      }
+    };
+  };
+
+  const updatePostHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      editProfile({
+        bio: userData.bio,
+        website: userData.website,
+        avatar: userData.avatar,
+        token: token,
+      })
+    );
+
+    toast.success("User Details Updated");
+    handleEditModalClose();
+  };
+
   return (
     <>
       <Modal
@@ -24,8 +65,8 @@ export const EditProfile = ({ handleEditModalClose, editModalOpen }) => {
       >
         <Box sx={style}>
           <Avatar
-            alt="John Doe"
-            src="./img/user.jpg"
+            alt={userInfo.username}
+            src={userData.avatar}
             sx={{ width: 100, height: 100, position: "relative" }}
           />
           <Box sx={{ cursor: "pointer" }} htmlFor="avatar" component="label">
@@ -38,6 +79,13 @@ export const EditProfile = ({ handleEditModalClose, editModalOpen }) => {
               name="avatar"
               type="file"
               accept="image/*"
+              // onChange={(event) =>
+              //   setUserData((prev) => ({
+              //     ...prev,
+              //     avatar: event.target.files[0],
+              //   }))
+              // }
+              onChange={(event) => updateImage(event.target.files[0])}
             />
           </Box>
 
@@ -54,7 +102,7 @@ export const EditProfile = ({ handleEditModalClose, editModalOpen }) => {
                 Name
               </Typography>
               <Typography variant="h5" component="h5">
-                John Doe
+                {userInfo.firstName + " " + userInfo.lastName}
               </Typography>
             </Box>
             <Box
@@ -68,7 +116,7 @@ export const EditProfile = ({ handleEditModalClose, editModalOpen }) => {
                 Username
               </Typography>
               <Typography variant="p" component="p">
-                johndoe
+                {userInfo.username}
               </Typography>
             </Box>
             <Box
@@ -88,7 +136,15 @@ export const EditProfile = ({ handleEditModalClose, editModalOpen }) => {
               >
                 Bio
               </Typography>
-              <Input value="Bio" />
+              <Input
+                value={userData.bio}
+                onChange={(event) =>
+                  setUserData((prev) => ({
+                    ...prev,
+                    bio: event.target.value,
+                  }))
+                }
+              />
             </Box>
             <Box
               sx={{
@@ -107,10 +163,20 @@ export const EditProfile = ({ handleEditModalClose, editModalOpen }) => {
               >
                 Website
               </Typography>
-              <Input value="http://localhost:3000/user-profile" />
+              <Input
+                value={userData.website}
+                onChange={(event) =>
+                  setUserData((prev) => ({
+                    ...prev,
+                    website: event.target.value,
+                  }))
+                }
+              />
             </Box>
           </Box>
-          <Button variant="contained">Update</Button>
+          <Button variant="contained" onClick={(e) => updatePostHandler(e)}>
+            Update
+          </Button>
         </Box>
       </Modal>
     </>
