@@ -1,7 +1,7 @@
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 import axios from "axios";
 import toast from "react-hot-toast";
-import { getPosts, likedPostService, dislikedPostService, bookmarkService, removeBookmarkService, editPostServices, deletePostServices, postCommentsServices, editCommentsServices, deleteCommentsServices } from "../Services/postServices";
+import { getPosts, likedPostService, dislikedPostService, bookmarkService, removeBookmarkService, editPostServices, deletePostServices, postCommentsServices, editCommentsServices, deleteCommentsServices, getUserPostServices } from "../Services/postServices";
 
 export const getAllPosts = createAsyncThunk('posts/getPosts', async () => {
     try {
@@ -116,13 +116,23 @@ export const editComments = createAsyncThunk(
     },
   );
 
+  export const getUserPosts = createAsyncThunk('profile/getUserPost', async (username) => {
+    try {
+      const response = await getUserPostServices(username);
+      return response.data.posts;
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
 
 
 const initialState = {
     loader: false,
     error: "",
     posts: [],
-    bookmark: []
+    bookmark: [],
+    userPosts: [],
 }
 
 const postSlice = createSlice({
@@ -285,6 +295,21 @@ const postSlice = createSlice({
         [deleteComments.rejected]: (state) => {
             state.loader = false;
         },
+
+        // Get Particular User Posts
+        [getUserPosts.pending]: (state) => {
+            state.loader = true;
+        },
+
+        [getUserPosts.fulfilled]: (state, action) => {
+            state.loader = false;
+            state.userPosts = action.payload
+        },
+
+        [getUserPosts.rejected]: (state) => {
+            state.loader = false;
+        },
+
 
     }
 })

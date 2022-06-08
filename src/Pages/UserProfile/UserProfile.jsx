@@ -15,7 +15,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EditProfile } from "../../Components";
 import { theme } from "../../theme";
-import { getAllPosts } from "../../store/postSlice";
+import { getAllPosts, getUserPosts } from "../../store/postSlice";
 import { followUser, getAllUsers, unfollowUser } from "../../store/userSlice";
 
 export const UserProfile = () => {
@@ -33,7 +33,7 @@ export const UserProfile = () => {
   const handleFollowingModalClose = () => setFollowingModalOpen(false);
 
   const {
-    posts: { posts },
+    posts: { posts, userPosts },
     users: { users },
     auth: { userInfo, token },
   } = useSelector((state) => state);
@@ -41,13 +41,11 @@ export const UserProfile = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllUsers());
-    dispatch(getAllPosts());
-  }, [dispatch]);
-
-  const currentUserPosts = posts.filter(
-    (eachPost) => eachPost.username === userInfo.username
-  );
+    if (username) {
+      dispatch(getAllUsers());
+      dispatch(getUserPosts(username));
+    }
+  }, [dispatch, username]);
 
   const currentUserDetails = users?.find(
     (userInfo) => userInfo.username === username
@@ -77,7 +75,6 @@ export const UserProfile = () => {
             <Box
               sx={{
                 width: "100%",
-                padding: "10px",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -87,13 +84,13 @@ export const UserProfile = () => {
               <Box
                 sx={{
                   borderRadius: "5px",
-                  marginTop: "16px",
+                  marginTop: "15px",
                   width: "800px",
                   boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
                 }}
               >
                 <Stack
-                  direction="row"
+                  direction="column"
                   spacing={2}
                   display="flex"
                   alignItems="center"
@@ -103,11 +100,10 @@ export const UserProfile = () => {
                   <Avatar
                     alt="Remy Sharp"
                     src={currentUserDetails?.avatar}
-                    sx={{ width: 80, height: 80 }}
+                    sx={{ width: 100, height: 100}}
                   />
                   {userInfo?.username === currentUserDetails?.username && (
                     <Button
-                      sx={{ left: "10px" }}
                       variant="outlined"
                       onClick={handleEditModalOpen}
                     >
@@ -152,7 +148,7 @@ export const UserProfile = () => {
                   </Link>
                   <Box className="followers-details">
                     <Button sx={{ color: "black" }}>
-                      {currentUserPosts?.length} post
+                      {userPosts?.length} post
                     </Button>
 
                     <Button
@@ -173,9 +169,9 @@ export const UserProfile = () => {
               </Box>
 
               {/* Post Cards */}
-              {currentUserPosts.length !== 0 ? (
+              {userPosts.length !== 0 ? (
                 <Box>
-                  {currentUserPosts.map((post) => (
+                  {userPosts.map((post) => (
                     <PostCard post={post} key={post._id} />
                   ))}
                 </Box>
@@ -196,7 +192,7 @@ export const UserProfile = () => {
               sx={{
                 display: "flex",
                 justifyContent: "flex-end",
-                width: "39%",
+                width: "20%",
                 margin: "0 0px",
               }}
             >
@@ -206,12 +202,12 @@ export const UserProfile = () => {
             <FollowersModal
               followersModalOpen={followersModalOpen}
               handleFollowersModalClose={handleFollowersModalClose}
-              followers = {currentUserDetails?.followers}
+              followers={currentUserDetails?.followers}
             />
             <FollowingModal
               followingModalOpen={followingModalOpen}
               handleFollowingModalClose={handleFollowingModalClose}
-              following = {currentUserDetails?.following}
+              following={currentUserDetails?.following}
             />
           </Box>
         </Box>
