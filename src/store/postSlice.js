@@ -17,7 +17,7 @@ export const getAllPosts = createAsyncThunk('posts/getPosts', async () => {
 export const createNewPost = createAsyncThunk('posts/createPost', async ({ content, imgUrl, token }) => {
     try {
         const response = await axios.post('/api/posts', { postData: { content: content, imgUrl: imgUrl, token: token } }, { headers: { authorization: token } });
-        if (response.success === 200) {
+        if (response.status === 201) {
             toast.success("New Post added", { position: "top-right" })
         }
         return response.data.posts;
@@ -31,7 +31,7 @@ export const createNewPost = createAsyncThunk('posts/createPost', async ({ conte
 export const likedPosts = createAsyncThunk('posts/likedPosts', async ({ postId, token }) => {
     try {
         const response = await likedPostService(postId, token)
-        if (response.success === 200) {
+        if (response.status === 201) {
             toast.success("Liked Post", { position: "top-right" })
         }
         return response.data.posts;
@@ -44,7 +44,7 @@ export const likedPosts = createAsyncThunk('posts/likedPosts', async ({ postId, 
 export const dislikedPosts = createAsyncThunk('posts/dislikedPosts', async ({ postId, token }) => {
     try {
         const response = await dislikedPostService(postId, token)
-        if (response.success === 200) {
+        if (response.status === 201) {
             toast.success("Disliked Post", { position: "top-right" })
         }
         return response.data.posts;
@@ -57,7 +57,7 @@ export const dislikedPosts = createAsyncThunk('posts/dislikedPosts', async ({ po
 export const bookmarkPosts = createAsyncThunk('posts/bookmarkPosts', async ({ postId, token }) => {
     try {
         const response = await bookmarkService(postId, token)
-        if (response.success === 200) {
+        if (response.status === 200) {
             toast.success("Post added to BookMark", { position: "top-right" })
         }
         return response.data.bookmarks;
@@ -69,7 +69,9 @@ export const bookmarkPosts = createAsyncThunk('posts/bookmarkPosts', async ({ po
 export const removeBookmarkPosts = createAsyncThunk('posts/removeBookmarkPosts', async ({ postId, token }) => {
     try {
         const response = await removeBookmarkService(postId, token)
-        toast.success("Post removed from BookMark", { position: "top-right" })
+        if (response.status === 200) {
+            toast.success("Post removed from BookMark", { position: "top-right" })
+        }
         return response.data.bookmarks;
     } catch (error) {
         console.error(error)
@@ -79,7 +81,7 @@ export const removeBookmarkPosts = createAsyncThunk('posts/removeBookmarkPosts',
 export const editPost = createAsyncThunk('/posts/editPosts', async ({ id, content, imgUrl, token }) => {
     try {
         const response = await axios.post(`/api/posts/edit/${id}`, { postData: { content: content, imgUrl: imgUrl, token: token } }, { headers: { authorization: token } })
-        if (response.success === 200) {
+        if (response.status === 201) {
             toast.success("Post Editted", { position: "top-right" })
         }
         return response.data.posts;
@@ -91,7 +93,7 @@ export const editPost = createAsyncThunk('/posts/editPosts', async ({ id, conten
 export const deletePost = createAsyncThunk('/posts/deletePosts', async ({ postId, token }) => {
     try {
         const response = await deletePostServices(postId, token)
-        if (response.success === 200) {
+        if (response.status === 201) {
             toast.success("Post Deleted", { position: "top-right" })
         }
         return response.data.posts;
@@ -103,7 +105,7 @@ export const deletePost = createAsyncThunk('/posts/deletePosts', async ({ postId
 export const postComments = createAsyncThunk('/posts/postComments', async ({ postId, commentData, token }) => {
     try {
         const response = await postCommentsServices(postId, commentData, token)
-        if (response.success === 200) {
+        if (response.status === 201) {
             toast.success("Comment added", { position: "top-right" })
         }
         return response.data.posts;
@@ -117,7 +119,7 @@ export const editComments = createAsyncThunk(
     async ({ postId, commentId, commentData, token }) => {
         try {
             const response = await editCommentsServices(postId, commentId, commentData, token);
-            if (response.success === 200) {
+            if (response.status === 201) {
                 toast.success("Comment Updated", { position: "top-right" })
             }
             return response.data.posts;
@@ -132,7 +134,7 @@ export const deleteComments = createAsyncThunk(
     async ({ postId, commentId, token }) => {
         try {
             const response = await deleteCommentsServices(postId, commentId, token);
-            if (response.success === 200) {
+            if (response.success === 201) {
                 toast.success("Comment Deleted", { position: "top-right" })
             }
             return response.data.posts;

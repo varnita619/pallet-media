@@ -15,7 +15,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../../theme";
 import { authServices } from "../../Services/authServices";
 
-export const HomePage = () => {
+export const Login = () => {
   const [login, setLogin] = React.useState({ username: "", password: "" });
   const { loginService } = authServices();
   const loginAsGuest = { username: "aron20", password: "aron123" };

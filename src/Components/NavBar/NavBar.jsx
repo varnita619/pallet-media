@@ -220,7 +220,7 @@ export const NavBar = () => {
                   <Button
                     onClick={(e) => {
                       e.preventDefault();
-                      navigate("/explore");
+                      navigate("/home");
                     }}
                     sx={{
                       display: {

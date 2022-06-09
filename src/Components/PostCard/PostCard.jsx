@@ -23,6 +23,7 @@ import {
   bookmarkPosts,
   removeBookmarkPosts,
 } from "../../store/postSlice";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const PostCard = ({ post }) => {
   const { userInfo, token } = useSelector((state) => state.auth);
@@ -41,6 +42,7 @@ export const PostCard = ({ post }) => {
       users.filter((userInfo) => userInfo.username === post.username)[0]
     );
   }, [post, userInfo, users, currentUser]);
+  const navigate = useNavigate();
 
   const likeByUser = () => {
     return (
@@ -69,15 +71,6 @@ export const PostCard = ({ post }) => {
     }
   };
 
-  function copy() {
-    const el = document.createElement("input");
-    el.value = `` + post._id;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-  }
-
   const handleCommentsModelOpen = () => setCommentsModelOpen(true);
   const handleCommentsModelClose = () => setCommentsModelOpen(false);
 
@@ -104,12 +97,12 @@ export const PostCard = ({ post }) => {
         }}
       >
         <CardHeader
-          className=""
           avatar={
             <Avatar
-              sx={{ bgcolor: grey[50] }}
+              sx={{ bgcolor: grey[50], cursor: "pointer" }}
               aria-label="recipe"
               src={currentUser?.avatar}
+              onClick={() => navigate(`/user-profile/${currentUser.username}`)}
             >
               {currentUser?.username}
             </Avatar>
@@ -173,10 +166,6 @@ export const PostCard = ({ post }) => {
             onClick={() => bookmarksHandler()}
           >
             {bookmarkByUser() ? <BookmarkIcon /> : <BookmarkBorderIcon />}
-          </IconButton>
-
-          <IconButton aria-label="share" onClick={copy}>
-            <ShareIcon />
           </IconButton>
         </CardActions>
         {comments

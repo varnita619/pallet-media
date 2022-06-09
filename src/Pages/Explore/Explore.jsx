@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button } from "@mui/material";
-import { NavBar, PostCard, SuggestionsSideBar } from "../../Components";
+import { Box } from "@mui/material";
+import { NavBar, PostCard } from "../../Components";
 import { getAllPosts } from "../../store/postSlice";
 import { theme } from "../../theme";
 import { ThemeProvider } from "styled-components";
@@ -18,22 +18,6 @@ export const Explore = () => {
   }, [dispatch]);
 
   const { posts } = useSelector((state) => state.posts);
-
-  const trendingPost = [...posts].sort(
-    (a, b) => b.likes.likeCount - a.likes.likeCount
-  );
-
-  const sortByDate = [...posts].sort(
-    (a, b) => new Date(b.createdAt).getDate() - new Date(a.createdAt).getDate()
-  );
-
-  const filteredPostsHandler = (posts, type) => {
-    if (type === "trending") {
-      dispatch(getTrendingPosts({ trendingPost: [...posts] }));
-    } else if (type === "sortByDate") {
-      dispatch(getTrendingPosts({ trendingPost: [...posts].reverse() }));
-    }
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -58,28 +42,6 @@ export const Explore = () => {
             }}
           >
             <h1>Explore </h1>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                marginLeft: "670px",
-                gap: "16px",
-              }}
-              justifyContent={{ md: "center", xs: "flex-end" }}
-            >
-              <Button
-                variant="outlined"
-                onClick={() => filteredPostsHandler(trendingPost, "trending")}
-              >
-                Trending Posts
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={() => filteredPostsHandler(sortByDate, "sortByDate")}
-              >
-                New Posts
-              </Button>
-            </Box>
             {/* Post Cards */}
             {posts.length === 0 ? (
               <Typography variant="h3" component="h3">
@@ -92,19 +54,6 @@ export const Explore = () => {
                 ))}
               </Box>
             )}
-          </Box>
-
-          {/* Suggestion Box */}
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              width: "39%",
-              margin: "0 0px",
-            }}
-          >
-            <SuggestionsSideBar />
           </Box>
         </Box>
       </Box>
