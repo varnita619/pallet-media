@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EditProfile } from "../../Components";
 import { theme } from "../../theme";
-import { getUserPosts } from "../../store/postSlice";
+import { getAllPosts} from "../../store/postSlice";
 import { followUser, getAllUsers, unfollowUser } from "../../store/userSlice";
 
 export const UserProfile = () => {
@@ -32,7 +32,7 @@ export const UserProfile = () => {
   const handleFollowingModalClose = () => setFollowingModalOpen(false);
 
   const {
-    posts: { userPosts },
+    posts: { userPosts, posts },
     users: { users },
     auth: { userInfo, token },
   } = useSelector((state) => state);
@@ -42,13 +42,14 @@ export const UserProfile = () => {
   useEffect(() => {
     if (username) {
       dispatch(getAllUsers());
-      dispatch(getUserPosts(username));
+      dispatch(getAllPosts());
     }
-  }, [dispatch, username]);
+  }, [dispatch]);
 
   const currentUserDetails = users?.find(
     (userInfo) => userInfo.username === username
   );
+  const getUserPost = posts.filter((eachPost) => eachPost.username === username)
 
   const isFollowed = () =>
     currentUserDetails?.followers.some(
@@ -194,9 +195,9 @@ export const UserProfile = () => {
               </Box>
 
               {/* Post Cards */}
-              {userPosts.length !== 0 ? (
+              {getUserPost.length !== 0 ? (
                 <Box>
-                  {userPosts.map((post) => (
+                  {getUserPost.map((post) => (
                     <PostCard post={post} key={post._id} />
                   ))}
                 </Box>

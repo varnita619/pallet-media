@@ -65,7 +65,7 @@ export const CommentsModal = ({
               <Typography
                 variant="textarea"
                 component="textarea"
-                style={{ width: "100%", border: "none" }}
+                style={{ width: "100%", border: "none", resize:'none' }}
                 placeholder="Enter Your Text Here"
                 value={commentData}
                 onChange={(e) => setCommentData(e.target.value)}

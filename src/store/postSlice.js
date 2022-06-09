@@ -116,15 +116,6 @@ export const deleteComments = createAsyncThunk(
     },
 );
 
-export const getUserPosts = createAsyncThunk('profile/getUserPost', async (username) => {
-    try {
-        const response = await getUserPostServices(username);
-        return response.data.posts;
-    } catch (error) {
-        console.error(error);
-    }
-});
-
 //Trending post
 export const getTrendingPosts = createAsyncThunk(
     "posts/trendingPost",
@@ -141,7 +132,6 @@ const initialState = {
     error: "",
     posts: [],
     bookmark: [],
-    userPosts: [],
 }
 
 const postSlice = createSlice({
@@ -302,20 +292,6 @@ const postSlice = createSlice({
         },
 
         [deleteComments.rejected]: (state) => {
-            state.loader = false;
-        },
-
-        // Get Particular User Posts
-        [getUserPosts.pending]: (state) => {
-            state.loader = true;
-        },
-
-        [getUserPosts.fulfilled]: (state, action) => {
-            state.loader = false;
-            state.userPosts = action.payload
-        },
-
-        [getUserPosts.rejected]: (state) => {
             state.loader = false;
         },
 

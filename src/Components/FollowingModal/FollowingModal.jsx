@@ -65,7 +65,9 @@ export const FollowingModal = ({
                     subheader={`@${user?.username}`}
                   />
                 </Link>
-                <Button variant="outlined" sx={{borderRadius:'20px', padding:0, textTransform:'inherit'}} onClick={() => dispatch(unfollowUser({followUserId: user._id, token: token}))}>Unfollow</Button>
+                <Box sx={{padding:'6px'}}>
+                <Button variant="outlined" sx={{borderRadius:'10px', padding:'10px', textTransform:'inherit'}} onClick={() => dispatch(unfollowUser({followUserId: user._id, token: token}))}>Unfollow</Button>
+                </Box>
               </Box>
             ))}
           </Box>

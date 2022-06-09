@@ -19,8 +19,6 @@ export const Explore = () => {
 
   const { posts } = useSelector((state) => state.posts);
 
-  const oldPost = [...posts].reverse();
-
   const trendingPost = [...posts].sort(
     (a, b) => b.likes.likeCount - a.likes.likeCount
   );
@@ -34,8 +32,6 @@ export const Explore = () => {
       dispatch(getTrendingPosts({ trendingPost: [...posts] }));
     } else if (type === "sortByDate") {
       dispatch(getTrendingPosts({ trendingPost: [...posts].reverse() }));
-    } else if (type === "oldPost") {
-      dispatch(getTrendingPosts({ trendingPost: posts }));
     }
   };
 
@@ -82,12 +78,6 @@ export const Explore = () => {
                 onClick={() => filteredPostsHandler(sortByDate, "sortByDate")}
               >
                 New Posts
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={() => filteredPostsHandler(oldPost, "oldPost")}
-              >
-                Old Posts
               </Button>
             </Box>
             {/* Post Cards */}

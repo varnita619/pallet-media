@@ -31,8 +31,15 @@ export const Bookmark = () => {
           You haven't BookMarked any post yet!
         </Typography>
       ) : (
-        <Box className="user-profile-container">
-          <Box className="user-profile-inside-container">
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <Box sx={{ display: "flex", width: "100%" }}>
             <Box
               sx={{
                 width: "100%",
