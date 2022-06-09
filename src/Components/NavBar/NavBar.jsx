@@ -164,7 +164,6 @@ export const NavBar = () => {
       toast.error("Please write something to post..");
     } else if (postData.imgUrl) {
       const file = postData.imgUrl;
-      setName(file.name);
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -191,6 +190,10 @@ export const NavBar = () => {
 
     setOpen(false);
   };
+
+  const removeImage = () =>{
+    setName('')
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -335,21 +338,22 @@ export const NavBar = () => {
                         ...prev,
                         content: event.target.value,
                       }))
-                    }
+                      }
                   ></Typography>
                 </div>
                 <div className="action-btn-container">
-                  <label htmlFor="icon-button-file">
+                  <label htmlFor="icon-button-file" sx={{position:'relative'}}>
                     <Input
                       accept="image/*"
                       id="icon-button-file"
                       type="file"
-                      onChange={(event) =>
+                      onChange={(event) =>(
                         setPostData((prev) => ({
                           ...prev,
                           imgUrl: event.target.files[0],
-                        }))
-                      }
+                        })),
+                        setName(postData?.imgUrl?.name)
+                        )}
                     />
                     <IconButton
                       color="primary"
@@ -358,8 +362,14 @@ export const NavBar = () => {
                     >
                       <PhotoCamera />
                     </IconButton>
-                    {postData?.imgUrl?.name}
+                    {name}
                   </label>
+                  <span>
+                    <CloseIcon
+                      onClick={() => removeImage()}
+                      sx={{ cursor: "pointer", position:'absolute' }}
+                    />
+                  </span>
                   <Button
                     variant="contained"
                     sx={{

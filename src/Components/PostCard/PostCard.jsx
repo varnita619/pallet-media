@@ -15,7 +15,6 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { Comment } from "@mui/icons-material";
-import "./PostCard.css";
 import { EditDeletePost, CommentsModal, Comments } from "../../Components";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -24,7 +23,6 @@ import {
   bookmarkPosts,
   removeBookmarkPosts,
 } from "../../store/postSlice";
-import { Box } from "@mui/material";
 
 export const PostCard = ({ post }) => {
   const { userInfo, token } = useSelector((state) => state.auth);
@@ -98,7 +96,13 @@ export const PostCard = ({ post }) => {
         handleCommentsModelClose={handleCommentsModelClose}
         post={post}
       />
-      <Card className="card" sx={{ border: ".5px solid #e2e8f0" }}>
+      <Card
+        sx={{
+          border: ".5px solid #e2e8f0",
+          maxWidth: 600,
+          marginTop: "20px",
+        }}
+      >
         <CardHeader
           className=""
           avatar={
@@ -119,7 +123,7 @@ export const PostCard = ({ post }) => {
             </IconButton>
           }
           title={currentUser?.firstName + " " + currentUser?.lastName}
-          subheader="June 5, 2022"
+          subheader="June 10, 2022"
         />
         <EditDeletePost
           editDeleteModalOpen={editDeleteModalOpen}
@@ -133,7 +137,7 @@ export const PostCard = ({ post }) => {
             height="250"
             image={imgUrl}
             alt="not uploaded"
-            sx={{ objectFit: "contain" }}
+            sx={{ objectFit: "cover" }}
           />
         ) : (
           ""

@@ -60,19 +60,6 @@ export const users = [
   },
   {
     _id: uuid(),
-    firstName: "Anuj",
-    lastName: "Kumar",
-    username: "anujkumar",
-    password: "anuj123",
-    bookmarks: [],
-    bio: 'Aspring FullStack Developer',
-    website: ' https://varnitamakrariya.netlify.app/',
-    avatar: 'https://res.cloudinary.com/dqgqdj4jf/image/upload/v1654447993/PalletGram/users/6BqB7h-i_400x400_qkbhfu.jpg',
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
-  },
-  {
-    _id: uuid(),
     firstName: "John",
     lastName: "Human",
     username: "johnthehuman",
@@ -84,4 +71,18 @@ export const users = [
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
+  {
+    _id: uuid(),
+    firstName: "Anuj",
+    lastName: "Kumar",
+    username: "anujkumar",
+    password: "anuj123",
+    bookmarks: [],
+    bio: 'Aspring FullStack Developer',
+    website: ' https://varnitamakrariya.netlify.app/',
+    avatar: 'https://res.cloudinary.com/dqgqdj4jf/image/upload/v1654447993/PalletGram/users/6BqB7h-i_400x400_qkbhfu.jpg',
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
+
 ];
