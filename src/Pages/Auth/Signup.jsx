@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../../theme";
-import "./HomePage.css";
 import { authServices } from "../../Services/authServices";
 
 export const Signup = () => {
@@ -26,7 +25,6 @@ export const Signup = () => {
   const { signupService } = authServices();
   const signupHandler = (e) => {
     e.preventDefault();
-    // setFormData({firstName: "", lastName: "", username: "", password: "" })
     signupService(formData);
   };
 
@@ -59,7 +57,14 @@ export const Signup = () => {
               variant="h5"
               sx={{ fontWeight: "bold", fontStyle: "italic" }}
             >
-              Welcome to <span className="site-name">PalletGram</span>
+              Welcome to
+              <Typography
+                variant="span"
+                component="span"
+                sx={{ color: "#f73378" }}
+              >
+                PalletGram
+              </Typography>
             </Typography>
             <p>Create your account</p>
             <Box component="form" noValidate sx={{ mt: 1 }}>

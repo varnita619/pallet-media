@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../../theme";
-import "./HomePage.css";
 import { authServices } from "../../Services/authServices";
 
 export const HomePage = () => {
@@ -27,8 +26,8 @@ export const HomePage = () => {
   };
 
   const loginAsGuestHandler = () => {
-    loginService(loginAsGuest)
-    setLogin(loginAsGuest)
+    loginService(loginAsGuest);
+    setLogin(loginAsGuest);
   };
 
   return (
@@ -60,7 +59,14 @@ export const HomePage = () => {
               variant="h5"
               sx={{ fontWeight: "bold", fontStyle: "italic" }}
             >
-              Welcome to <span className="site-name">PalletGram</span>
+              Welcome to
+              <Typography
+                variant="span"
+                component="span"
+                sx={{ color: "#f73378" }}
+              >
+                PalletGram
+              </Typography>
             </Typography>
             <p>Login to your account</p>
             <Box
@@ -116,7 +122,9 @@ export const HomePage = () => {
                 Login
               </Button>
               <Box sx={{ textAlign: "center" }}>
-                <Button onClick={(e) => loginAsGuestHandler(e)}>Login As Guest</Button>
+                <Button onClick={(e) => loginAsGuestHandler(e)}>
+                  Login As Guest
+                </Button>
               </Box>
               <Grid container>
                 <Grid item xs>

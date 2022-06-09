@@ -25,16 +25,16 @@ export const Explore = () => {
     (a, b) => b.likes.likeCount - a.likes.likeCount
   );
 
-  const newPost = [...posts].sort(
+  const sortByDate = [...posts].sort(
     (a, b) => new Date(b.createdAt).getDate() - new Date(a.createdAt).getDate()
   );
 
   const filteredPostsHandler = (posts, type) => {
     if (type === "trending") {
       dispatch(getTrendingPosts({ trendingPost: [...posts] }));
-    } else if (type === "newPost") {
+    } else if (type === "sortByDate") {
       dispatch(getTrendingPosts({ trendingPost: [...posts].reverse() }));
-    } else if(type === "oldPost") {
+    } else if (type === "oldPost") {
       dispatch(getTrendingPosts({ trendingPost: posts }));
     }
   };
@@ -42,8 +42,15 @@ export const Explore = () => {
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
-      <Box className="user-profile-container">
-        <Box className="user-profile-inside-container">
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <Box sx={{ display: "flex", width: "100%" }}>
           <Box
             sx={{
               width: "100%",
@@ -62,6 +69,7 @@ export const Explore = () => {
                 marginLeft: "670px",
                 gap: "16px",
               }}
+              justifyContent={{ md: "center", xs: "flex-end" }}
             >
               <Button
                 variant="outlined"
@@ -71,7 +79,7 @@ export const Explore = () => {
               </Button>
               <Button
                 variant="outlined"
-                onClick={() => filteredPostsHandler(newPost, "newPost")}
+                onClick={() => filteredPostsHandler(sortByDate, "sortByDate")}
               >
                 New Posts
               </Button>

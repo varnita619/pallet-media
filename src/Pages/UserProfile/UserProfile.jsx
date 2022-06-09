@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Avatar, Stack, Button, Typography } from "@mui/material";
+import { Avatar, Stack, Button, Typography,Link } from "@mui/material";
 import {
   NavBar,
   PostCard,
@@ -8,7 +8,6 @@ import {
   FollowingModal,
 } from "../../Components";
 import { Box } from "@mui/system";
-import "./UserProfile.css";
 import { useParams } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { useEffect } from "react";
@@ -70,8 +69,8 @@ export const UserProfile = () => {
     <ThemeProvider theme={theme}>
       <NavBar />
       {currentUserDetails && (
-        <Box className="user-profile-container">
-          <Box className="user-profile-inside-container">
+        <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
+          <Box sx={{ display: "flex", width: "100%" }}>
             <Box
               sx={{
                 width: "100%",
@@ -120,33 +119,59 @@ export const UserProfile = () => {
                     editModalOpen={editModalOpen}
                   />
                 </Stack>
-                <Box className="user-details-container">
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    gap: "0.6rem",
+                    borderBottom: "1px solid #e2e8f0",
+                  }}
+                >
                   <Typography
                     component="span"
                     variant="span"
-                    className="original-name"
+                    sx={{ fontWeight: "bold", fontSize: "18px" }}
                   >
                     {currentUserDetails?.firstName}{" "}
                     {currentUserDetails?.lastName}
                   </Typography>
+                  <Typography component="span" variant="span">
+                    @{currentUserDetails?.username}
+                  </Typography>
                   <Typography
                     component="span"
                     variant="span"
-                    className="user-name"
+                    sx={{ width: "300px", wordWrap: "break-word" }}
                   >
-                    @{currentUserDetails?.username}
-                  </Typography>
-                  <Typography component="span" variant="span" className="bio">
                     {currentUserDetails?.bio}
                   </Typography>
-                  <a
+                  <Link
                     href={currentUserDetails?.website}
                     target="_blank"
-                    className="web-link"
+                    sx={{
+                      width: "300px",
+                      wordWrap: "break-word",
+                      textDecoration: "underline",
+                      color: "#f73378",
+                      cursor: "pointer",
+                    }}
                   >
                     {currentUserDetails?.website}
-                  </a>
-                  <Box className="followers-details">
+                  </Link>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-around",
+                      gap: "2rem",
+                      marginTop: "0.2rem",
+                      marginBottom: "0.5rem",
+                      cursor: "pointer",
+                      fontWeight: "bold",
+                    }}
+                  >
                     <Button sx={{ color: "black" }}>
                       {userPosts?.length} post
                     </Button>
@@ -192,7 +217,7 @@ export const UserProfile = () => {
               sx={{
                 display: "flex",
                 justifyContent: "flex-end",
-                width: "28%",
+                width: "30%",
                 margin: "0 0px",
               }}
             >

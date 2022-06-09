@@ -197,7 +197,9 @@ export const NavBar = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Paper>
+      <Paper 
+      // sx={{ top:0, position:'sticky', overflow:'hidden'}}
+      >
         <Box sx={{ flexGrow: 1 }}>
           <AppBar
             position="static"

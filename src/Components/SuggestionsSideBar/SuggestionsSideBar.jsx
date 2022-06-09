@@ -36,10 +36,8 @@ export const SuggestionsSideBar = () => {
   return (
     <Box display={{ lg: "block", xs: "none" }}>
       <List
-        className="suggestions-main-container"
         dense
         sx={{
-          width: "100%",
           height: "100vh",
           maxWidth: 310,
           bgcolor: "background.paper",
@@ -47,7 +45,7 @@ export const SuggestionsSideBar = () => {
           borderLeft: "2px solid #e6e1e1dd",
           position: "sticky",
           top: "0",
-          padding: "1rem",
+          padding: "16px",
         }}
       >
         <h3>Suggestions for you</h3>
