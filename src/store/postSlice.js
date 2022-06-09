@@ -95,35 +95,44 @@ export const postComments = createAsyncThunk('/posts/postComments', async ({ pos
 export const editComments = createAsyncThunk(
     'posts/editComments',
     async ({ postId, commentId, commentData, token }) => {
-      try {
-        const response = await editCommentsServices(postId, commentId, commentData, token);
-        return response.data.posts;
-      } catch (error) {
-        console.error(error);
-      }
+        try {
+            const response = await editCommentsServices(postId, commentId, commentData, token);
+            return response.data.posts;
+        } catch (error) {
+            console.error(error);
+        }
     },
-  );
-  
-  export const deleteComments = createAsyncThunk(
-    'posts/deleteComments',
-    async ({ postId, commentId, token}) => {
-      try {
-        const response = await deleteCommentsServices(postId, commentId, token);
-        return response.data.posts;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  );
+);
 
-  export const getUserPosts = createAsyncThunk('profile/getUserPost', async (username) => {
+export const deleteComments = createAsyncThunk(
+    'posts/deleteComments',
+    async ({ postId, commentId, token }) => {
+        try {
+            const response = await deleteCommentsServices(postId, commentId, token);
+            return response.data.posts;
+        } catch (error) {
+            console.error(error);
+        }
+    },
+);
+
+export const getUserPosts = createAsyncThunk('profile/getUserPost', async (username) => {
     try {
-      const response = await getUserPostServices(username);
-      return response.data.posts;
+        const response = await getUserPostServices(username);
+        return response.data.posts;
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
-  });
+});
+
+//Trending post
+export const getTrendingPosts = createAsyncThunk(
+    "posts/trendingPost",
+    async ({ trendingPost }) => {
+        const data = await trendingPost;
+        return data;
+    }
+);
 
 
 
@@ -268,8 +277,8 @@ const postSlice = createSlice({
             state.loader = false;
         },
 
-         // Edit Comments
-         [editComments.pending]: (state) => {
+        // Edit Comments
+        [editComments.pending]: (state) => {
             state.loader = true;
         },
 
@@ -282,8 +291,8 @@ const postSlice = createSlice({
             state.loader = false;
         },
 
-         // Delete Comments
-         [deleteComments.pending]: (state) => {
+        // Delete Comments
+        [deleteComments.pending]: (state) => {
             state.loader = true;
         },
 
@@ -310,6 +319,10 @@ const postSlice = createSlice({
             state.loader = false;
         },
 
+        //Filtered Post
+        [getTrendingPosts.fulfilled]: (state, action) => {
+            state.posts = action.payload;
+        },
 
     }
 })
