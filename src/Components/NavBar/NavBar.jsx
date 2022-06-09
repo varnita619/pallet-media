@@ -16,7 +16,6 @@ import {
   Modal,
   Backdrop,
   Paper,
-  Link,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -95,7 +94,6 @@ export const NavBar = () => {
   const { userInfo, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [postData, setPostData] = React.useState({ content: "", imgUrl: "" });
-  const [name, setName] = React.useState("");
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -191,15 +189,9 @@ export const NavBar = () => {
     setOpen(false);
   };
 
-  const removeImage = () =>{
-    setName('')
-  }
-
   return (
     <ThemeProvider theme={theme}>
-      <Paper 
-      // sx={{ top:0, position:'sticky', overflow:'hidden'}}
-      >
+      <Paper>
         <Box sx={{ flexGrow: 1 }}>
           <AppBar
             position="static"
@@ -332,7 +324,7 @@ export const NavBar = () => {
                   <Typography
                     variant="textarea"
                     component="textarea"
-                    style={{ width: "100%", border: "none", resize:'none' }}
+                    style={{ width: "100%", border: "none", resize: "none" }}
                     placeholder="What's Happening?"
                     value={postData.content}
                     onChange={(event) =>
@@ -340,22 +332,24 @@ export const NavBar = () => {
                         ...prev,
                         content: event.target.value,
                       }))
-                      }
+                    }
                   ></Typography>
                 </div>
                 <div className="action-btn-container">
-                  <label htmlFor="icon-button-file" sx={{position:'relative'}}>
+                  <label
+                    htmlFor="icon-button-file"
+                    sx={{ position: "relative" }}
+                  >
                     <Input
                       accept="image/*"
                       id="icon-button-file"
                       type="file"
-                      onChange={(event) =>(
+                      onChange={(event) =>
                         setPostData((prev) => ({
                           ...prev,
                           imgUrl: event.target.files[0],
-                        })),
-                        setName(postData?.imgUrl?.name)
-                        )}
+                        }))
+                      }
                     />
                     <IconButton
                       color="primary"
@@ -364,14 +358,8 @@ export const NavBar = () => {
                     >
                       <PhotoCamera />
                     </IconButton>
-                    {name}
+                    {postData?.imgUrl?.name}
                   </label>
-                  <span>
-                    <CloseIcon
-                      onClick={() => removeImage()}
-                      sx={{ cursor: "pointer", position:'absolute' }}
-                    />
-                  </span>
                   <Button
                     variant="contained"
                     sx={{

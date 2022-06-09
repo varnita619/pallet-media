@@ -126,7 +126,17 @@ export const Comments = ({ comment, _id }) => {
           horizontal: "left",
         }}
       >
-        <Box sx={{ padding: "16px", display: "flex", flexDirection: "column" }}>
+        <Typography
+          variant="p"
+          component="p"
+          sx={{
+            borderBottom: "1px solid black",
+            fontWeight: "bold",
+            fontSize: "15px",
+            textAlign: "center",
+            p: 2,
+          }}
+        >
           <Button
             onClick={handleModalOpen}
             sx={{ fontSize: "16px", color: "black" }}
@@ -134,6 +144,17 @@ export const Comments = ({ comment, _id }) => {
           >
             Edit
           </Button>
+        </Typography>
+        <Typography
+          variant="p"
+          component="p"
+          sx={{
+            p: 2,
+            fontSize: "15px",
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
+        >
           <Button
             onClick={() => deleteCommentsHandler()}
             sx={{ fontSize: "16px", color: "black" }}
@@ -141,7 +162,7 @@ export const Comments = ({ comment, _id }) => {
           >
             Delete
           </Button>
-        </Box>
+        </Typography>
       </Popover>
 
       <Modal
@@ -167,7 +188,7 @@ export const Comments = ({ comment, _id }) => {
               minRows={3}
               value={comments}
               onChange={(e) => setComments(e.target.value)}
-              style={{ width: 300, border: "none", outline: "none" }}
+              style={{ width: 300, border: "none", outline: "none", resize:'none' }}
             />
           </Box>
           <Button
