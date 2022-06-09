@@ -14,7 +14,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { ThemeProvider } from "@mui/material/styles";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { theme } from "../../theme";
-import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { editPost } from "../../store/postSlice";
 
@@ -76,7 +75,6 @@ export const UpdatePostModal = ({
       );
     
     }
-    toast.success("Post Updated");
     handleUpdatePostModalClose()
   };
 

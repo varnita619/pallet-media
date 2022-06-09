@@ -31,7 +31,6 @@ export const CommentsModal = ({
     }
     else{
         dispatch(postComments({postId: post._id, commentData: commentData, token: token }))
-        toast.success("Comment added.", {position:"top-right"})
     }
     setCommentData("")
     handleCommentsModelClose()

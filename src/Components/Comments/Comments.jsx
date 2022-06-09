@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { editComments, deleteComments } from "../../store/postSlice";
-import toast from "react-hot-toast";
 
 const style = {
   position: "absolute",
@@ -45,7 +44,6 @@ export const Comments = ({ comment, _id }) => {
         token: token,
       })
     );
-    toast.success("Post updated", { position: "top-right" });
 
     handleModalClose();
     handleClose();
@@ -60,7 +58,6 @@ export const Comments = ({ comment, _id }) => {
         token: token,
       })
     );
-    toast.success("Comment deleted", { position: "top-right" });
   };
 
   const handleClose = () => {
@@ -188,7 +185,12 @@ export const Comments = ({ comment, _id }) => {
               minRows={3}
               value={comments}
               onChange={(e) => setComments(e.target.value)}
-              style={{ width: 300, border: "none", outline: "none", resize:'none' }}
+              style={{
+                width: 300,
+                border: "none",
+                outline: "none",
+                resize: "none",
+              }}
             />
           </Box>
           <Button

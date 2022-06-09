@@ -10,7 +10,6 @@ import { Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { followUser } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 
 export const SuggestionsSideBar = () => {
   const { users } = useSelector((state) => state.users);

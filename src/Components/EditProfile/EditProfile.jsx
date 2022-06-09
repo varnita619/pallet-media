@@ -79,12 +79,6 @@ export const EditProfile = ({ handleEditModalClose, editModalOpen }) => {
               name="avatar"
               type="file"
               accept="image/*"
-              // onChange={(event) =>
-              //   setUserData((prev) => ({
-              //     ...prev,
-              //     avatar: event.target.files[0],
-              //   }))
-              // }
               onChange={(event) => updateImage(event.target.files[0])}
             />
           </Box>

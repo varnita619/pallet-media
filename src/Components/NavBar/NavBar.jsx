@@ -28,7 +28,6 @@ import { Bookmark, Explore } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { createNewPost } from "../../store/postSlice";
 import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
 import { logoutHandler } from "../../store/authSlice";
 
 const style = {
@@ -187,7 +186,6 @@ export const NavBar = () => {
           token: token,
         })
       );
-      toast.success("New Post added");
     }
     setPostData({ content: "", imgUrl: "" });
 
