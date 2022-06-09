@@ -26,7 +26,7 @@ export const SuggestionsSideBar = () => {
 
   const currentUserFollowing = currentUser?.following;
 
-  const userSuggestion = [...users].filter(
+  const userSuggestion = users.filter(
     (eachUser) =>
       !currentUserFollowing.find(
         (each) => eachUser.username === each.username
@@ -49,7 +49,7 @@ export const SuggestionsSideBar = () => {
         }}
       >
         <h3>Suggestions for you</h3>
-        {userSuggestion.map((users) => {
+        {userSuggestion?.map((users) => {
           return (
             <ListItem key={users._id}>
               <ListItemButton

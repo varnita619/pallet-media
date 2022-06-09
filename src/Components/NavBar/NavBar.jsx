@@ -121,6 +121,11 @@ export const NavBar = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const { users } = useSelector((state) => state.users);
+
+  const currentUser = users.find(
+    (eachUser) => eachUser.username === userInfo.username
+  );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
 
@@ -281,7 +286,7 @@ export const NavBar = () => {
                   >
                     <Avatar
                       alt="Remy Sharp"
-                      src={userInfo.avatar}
+                      src={currentUser?.avatar}
                       sx={{ width: 36, height: 36, ml: 1 }}
                     />
                   </IconButton>

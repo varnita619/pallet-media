@@ -16,7 +16,6 @@ export const getAllUsers = createAsyncThunk('users/getUsers', async () => {
 export const editProfile = createAsyncThunk('users/editProfile', async ({ bio, website, avatar, token }) => {
     try {
         const response = await axios.post('/api/users/edit', { userData: { bio: bio, website: website, avatar: avatar } }, { headers: { authorization: token } });
-        console.log(response)
         return response.data.user;
 
     } catch (error) {
@@ -78,7 +77,6 @@ const userSlice = createSlice({
             state.loader = true
         },
         [editProfile.fulfilled]: (state, action) => {
-            console.log(action.payload)
             state.users = state.users.map((eachUser) => eachUser.username === action.payload.username ? action.payload : eachUser);
             state.loader = false
         },
