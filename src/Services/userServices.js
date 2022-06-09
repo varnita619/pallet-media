@@ -8,6 +8,6 @@ export const followUsersService = (followUserId, token) =>{
     return axios.post(`/api/users/follow/${followUserId}`,{}, {headers: {authorization :token}})
 }
 
-export const unfollowUsersService = () =>{
+export const unfollowUsersService = (followUserId, token) =>{
     return axios.post(`/api/users/unfollow/${followUserId}`,{}, {headers: {authorization :token}})
 }

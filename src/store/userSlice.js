@@ -1,5 +1,6 @@
 const { createSlice, createAsyncThunk, current } = require("@reduxjs/toolkit");
 import axios from "axios";
+import toast from "react-hot-toast";
 import { followUsersService, getUsers, unfollowUsersService } from "../Services/userServices";
 
 
@@ -26,46 +27,27 @@ export const editProfile = createAsyncThunk('users/editProfile', async ({ bio, w
 export const followUser = createAsyncThunk('user/getFollow', async ({ followUserId, token }) => {
     try {
         const response = await followUsersService(followUserId, token)
+        if (response.status === 200) {
+            toast.success(`Followed ${response.data.followUser.username}`, { position: 'top-right' })
+        }
         return response.data;
     } catch (error) {
         console.error(error)
     }
 })
 
-export const unfollowUser = createAsyncThunk('user/getFollow', async ({ followUserId, token }) => {
+export const unfollowUser = createAsyncThunk('user/unFollow', async ({ followUserId, token }) => {
     try {
         const response = await unfollowUsersService(followUserId, token)
+        if (response.status === 200) {
+            toast.success(`Unfollowed ${response.data.followUser.username}`, { position: 'top-right' })
+        }
         return response.data;
     } catch (error) {
         console.error(error)
     }
 })
 
-// If I follow someone, data will update in following[] for me
-const updatingFollowingUser = (users, followingUser) => {
-    const isUser = users.find((user) => user._id === followingUser._id);
-
-    if (isUser) {
-        users = [...users].map((user) =>
-            user._id === isUser._id ? followingUser : user
-        );
-    }
-
-    return users;
-};
-
-// If I follow someone, data will update in follower [] of user which is I followed
-const updatingFollowedUser = (users, followedUser) => {
-    const isUser = users.find((user) => user._id === followedUser._id);
-
-    if (isUser) {
-        users = [...users].map((user) =>
-            user._id === isUser._id ? followedUser : user
-        );
-    }
-
-    return users;
-};
 
 
 const initialState = {
@@ -109,12 +91,12 @@ const userSlice = createSlice({
             state.loader = true
         },
         [followUser.fulfilled]: (state, action) => {
-            const { followUser, user } = action.payload;
-
-            // user as me
-            // followUser which mean I follow
-            state.users = updatingFollowingUser(current(state).users, user);
-            state.users = updatingFollowedUser(current(state).users, followUser);
+            state.users = [...state.users].map((user) =>
+                action.payload.followUser.username === user.username ? action.payload.followUser : user,
+            );
+            state.users = [...state.users].map((user) =>
+                action.payload.user.username === user.username ? action.payload.user : user,
+            );
             state.loader = false
         },
         [followUser.rejected]: (action) => {
@@ -126,9 +108,12 @@ const userSlice = createSlice({
             state.loader = true
         },
         [unfollowUser.fulfilled]: (state, action) => {
-            const { followUser, user } = action.payload;
-            state.users = updatingFollowingUser(current(state).users, user);
-            state.users = updatingFollowedUser(current(state).users, followUser);
+            state.users = state.users.map((user) =>
+                action.payload.followUser.username === user.username ? action.payload.followUser : user,
+            );
+            state.users = [...state.users].map((user) =>
+                action.payload.user.username === user.username ? action.payload.user : user,
+            );
             state.loader = false
         },
         [unfollowUser.rejected]: (action) => {

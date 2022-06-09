@@ -10,17 +10,27 @@ import { Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { followUser } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export const SuggestionsSideBar = () => {
   const { users } = useSelector((state) => state.users);
-  const {userInfo, token} = useSelector((state) => state.auth);
+  const { userInfo, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  let userSuggestion = users.filter(
-    (currUser) =>
-      !userInfo.following.find((innerCurrUser) => innerCurrUser._id === currUser._id) &&
-      currUser.username !== userInfo.username,
+  // filter user on the basis of user name for follow/ unfollow
+
+  const currentUser = users?.find(
+    (each) => each.username === userInfo.username
+  );
+
+  const currentUserFollowing = currentUser?.following;
+
+  const userSuggestion = [...users].filter(
+    (eachUser) =>
+      !currentUserFollowing.find(
+        (each) => eachUser.username === each.username
+      ) && eachUser.username !== currentUser.username
   );
 
   return (
@@ -44,7 +54,9 @@ export const SuggestionsSideBar = () => {
         {userSuggestion.map((users) => {
           return (
             <ListItem key={users._id}>
-              <ListItemButton onClick={() => navigate(`/user-profile/${users.username}`)}>
+              <ListItemButton
+                onClick={() => navigate(`/user-profile/${users.username}`)}
+              >
                 <ListItemAvatar>
                   <Avatar alt={users.username} src={users.avatar} />
                 </ListItemAvatar>
@@ -52,7 +64,12 @@ export const SuggestionsSideBar = () => {
                   primary={users.firstName + " " + users.lastName}
                 />
               </ListItemButton>
-              <Button onClick={() => dispatch(followUser({followUserId: users._id, token: token }))}
+              <Button
+                onClick={() => {
+                  dispatch(
+                    followUser({ followUserId: users._id, token: token })
+                  );
+                }}
                 variant="contained"
                 sx={{ padding: "6px 10px", borderRadius: "5px" }}
               >

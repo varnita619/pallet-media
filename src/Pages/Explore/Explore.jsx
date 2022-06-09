@@ -29,7 +29,6 @@ export const Explore = () => {
               padding: "10px",
               display: "flex",
               flexDirection: "column",
-              marginLeft: "20px",
               justifyContent: "center",
               alignItems: "center",
             }}

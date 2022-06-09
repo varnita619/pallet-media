@@ -9,13 +9,13 @@ import {
 } from "../../Components";
 import { Box } from "@mui/system";
 import "./UserProfile.css";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EditProfile } from "../../Components";
 import { theme } from "../../theme";
-import { getAllPosts, getUserPosts } from "../../store/postSlice";
+import { getUserPosts } from "../../store/postSlice";
 import { followUser, getAllUsers, unfollowUser } from "../../store/userSlice";
 
 export const UserProfile = () => {
@@ -33,7 +33,7 @@ export const UserProfile = () => {
   const handleFollowingModalClose = () => setFollowingModalOpen(false);
 
   const {
-    posts: { posts, userPosts },
+    posts: { userPosts },
     users: { users },
     auth: { userInfo, token },
   } = useSelector((state) => state);
@@ -77,7 +77,6 @@ export const UserProfile = () => {
                 width: "100%",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "center",
                 alignItems: "center",
               }}
             >
@@ -100,13 +99,10 @@ export const UserProfile = () => {
                   <Avatar
                     alt="Remy Sharp"
                     src={currentUserDetails?.avatar}
-                    sx={{ width: 100, height: 100}}
+                    sx={{ width: 100, height: 100 }}
                   />
                   {userInfo?.username === currentUserDetails?.username && (
-                    <Button
-                      variant="outlined"
-                      onClick={handleEditModalOpen}
-                    >
+                    <Button variant="outlined" onClick={handleEditModalOpen}>
                       Edit Profile
                     </Button>
                   )}
@@ -143,9 +139,13 @@ export const UserProfile = () => {
                   <Typography component="span" variant="span" className="bio">
                     {currentUserDetails?.bio}
                   </Typography>
-                  <Link to="" className="web-link">
+                  <a
+                    href={currentUserDetails?.website}
+                    target="_blank"
+                    className="web-link"
+                  >
                     {currentUserDetails?.website}
-                  </Link>
+                  </a>
                   <Box className="followers-details">
                     <Button sx={{ color: "black" }}>
                       {userPosts?.length} post
@@ -192,7 +192,7 @@ export const UserProfile = () => {
               sx={{
                 display: "flex",
                 justifyContent: "flex-end",
-                width: "20%",
+                width: "28%",
                 margin: "0 0px",
               }}
             >

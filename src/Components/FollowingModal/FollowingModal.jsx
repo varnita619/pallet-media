@@ -8,14 +8,15 @@ import {
   Modal,
   Typography,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+import {unfollowUser} from "../../store/userSlice";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 300,
+  width: 400,
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: "5px",
@@ -27,7 +28,8 @@ export const FollowingModal = ({
   handleFollowingModalClose,
   following,
 }) => {
-  const { userInfo } = useSelector((state) => state.auth);
+  const {token} = useSelector((state) => state.auth)
+  const dispatch = useDispatch();
   return (
     <div>
       <Modal
@@ -48,7 +50,7 @@ export const FollowingModal = ({
               Following
             </Typography>
             {following.map((user) => (
-              <Box key={user._id}>
+              <Box key={user._id} sx={{display:'flex', justifyContent:'space-between'}}>
                 <Link
                   onClick={handleFollowingModalClose}
                   to={`/user-profile/${user?.username}`}
@@ -63,6 +65,7 @@ export const FollowingModal = ({
                     subheader={`@${user?.username}`}
                   />
                 </Link>
+                <Button variant="outlined" sx={{borderRadius:'20px', padding:0, textTransform:'inherit'}} onClick={() => dispatch(unfollowUser({followUserId: user._id, token: token}))}>Unfollow</Button>
               </Box>
             ))}
           </Box>
