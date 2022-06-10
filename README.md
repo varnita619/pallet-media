@@ -61,8 +61,7 @@ PalletGram is a social media website just like instagram or twitter. In this app
 
 <table>
   <tr>
-    <td><img src="https://res.cloudinary.com/dqgqdj4jf/image/upload/v1654787232/PalletGram/screens/Screenshot_2022-06-09_203241_cmwvpi.png
-" alt="mockup" /></td>
+    <td><img src="https://res.cloudinary.com/dqgqdj4jf/image/upload/v1654787232/PalletGram/screens/Screenshot_2022-06-09_203241_cmwvpi.png" alt="mockup" /></td>
     <td><img src="https://res.cloudinary.com/dqgqdj4jf/image/upload/v1654787232/PalletGram/screens/Screenshot_2022-06-09_203601_lndj1x.png" alt="mockups" /></td>
   </tr>
   <tr>
