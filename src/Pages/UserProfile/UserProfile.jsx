@@ -1,11 +1,12 @@
 import * as React from "react";
-import { Avatar, Stack, Button, Typography,Link } from "@mui/material";
+import { Avatar, Stack, Button, Typography, Link } from "@mui/material";
 import {
   NavBar,
   PostCard,
   SuggestionsSideBar,
   FollowersModal,
   FollowingModal,
+  Loader,
 } from "../../Components";
 import { Box } from "@mui/system";
 import { useParams } from "react-router-dom";
@@ -14,7 +15,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EditProfile } from "../../Components";
 import { theme } from "../../theme";
-import { getAllPosts} from "../../store/postSlice";
+import { getAllPosts } from "../../store/postSlice";
 import { followUser, getAllUsers, unfollowUser } from "../../store/userSlice";
 
 export const UserProfile = () => {
@@ -32,7 +33,7 @@ export const UserProfile = () => {
   const handleFollowingModalClose = () => setFollowingModalOpen(false);
 
   const {
-    posts: { userPosts, posts },
+    posts: { posts, loader },
     users: { users },
     auth: { userInfo, token },
   } = useSelector((state) => state);
@@ -49,7 +50,9 @@ export const UserProfile = () => {
   const currentUserDetails = users?.find(
     (userInfo) => userInfo.username === username
   );
-  const getUserPost = posts.filter((eachPost) => eachPost.username === username)
+  const getUserPost = posts.filter(
+    (eachPost) => eachPost.username === username
+  );
 
   const isFollowed = () =>
     currentUserDetails?.followers.some(
@@ -174,7 +177,7 @@ export const UserProfile = () => {
                     }}
                   >
                     <Button sx={{ color: "black" }}>
-                      {userPosts?.length} post
+                      {getUserPost?.length} post
                     </Button>
 
                     <Button
@@ -195,20 +198,26 @@ export const UserProfile = () => {
               </Box>
 
               {/* Post Cards */}
-              {getUserPost.length !== 0 ? (
-                <Box>
-                  {getUserPost.map((post) => (
-                    <PostCard post={post} key={post._id} />
-                  ))}
-                </Box>
+              {loader ? (
+                <Loader />
               ) : (
-                <Typography
-                  variant="h3"
-                  component="h3"
-                  sx={{ padding: "10px" }}
-                >
-                  No Posts Yet!
-                </Typography>
+                <Box>
+                  {getUserPost.length !== 0 ? (
+                    <Box>
+                      {getUserPost.map((post) => (
+                        <PostCard post={post} key={post._id} />
+                      ))}
+                    </Box>
+                  ) : (
+                    <Typography
+                      variant="h3"
+                      component="h3"
+                      sx={{ padding: "10px" }}
+                    >
+                      No Posts Yet!
+                    </Typography>
+                  )}
+                </Box>
               )}
             </Box>
 

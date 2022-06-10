@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button } from "@mui/material";
-import { NavBar, PostCard, SuggestionsSideBar } from "../../Components";
+import { Loader, NavBar, PostCard, SuggestionsSideBar } from "../../Components";
 import { getAllPosts } from "../../store/postSlice";
 import { theme } from "../../theme";
 import { ThemeProvider } from "styled-components";
@@ -17,7 +17,7 @@ export const Home = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  const { posts } = useSelector((state) => state.posts);
+  const { posts, loader } = useSelector((state) => state.posts);
   const { users } = useSelector((state) => state.users);
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -43,11 +43,11 @@ export const Home = () => {
   );
   const loggedUserFollowing = loggedUser?.following;
 
-  const feedPost = posts.filter(
+  const feedPost = posts?.filter(
     (eachPost) =>
       loggedUserFollowing?.find(
         (each) => each.username === eachPost.username
-      ) || eachPost.username === loggedUser.username
+      ) || eachPost.username === loggedUser?.username
   );
 
   return (
@@ -97,15 +97,21 @@ export const Home = () => {
             </Box>
 
             {/* Post Cards */}
-            {feedPost.length === 0 ? (
-              <Typography variant="h3" component="h3">
-                Post Something.
-              </Typography>
+            {loader ? (
+              <Loader />
             ) : (
               <Box>
-                {feedPost?.map((post) => (
-                  <PostCard post={post} key={post._id} />
-                ))}
+                {feedPost.length === 0 ? (
+                  <Typography variant="h3" component="h3">
+                    Post Something.
+                  </Typography>
+                ) : (
+                  <Box>
+                    {feedPost?.map((post) => (
+                      <PostCard post={post} key={post._id} />
+                    ))}
+                  </Box>
+                )}
               </Box>
             )}
           </Box>

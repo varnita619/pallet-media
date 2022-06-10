@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
-import { NavBar, PostCard } from "../../Components";
+import { Loader, NavBar, PostCard } from "../../Components";
 import { getAllPosts } from "../../store/postSlice";
 import { theme } from "../../theme";
 import { ThemeProvider } from "styled-components";
 import { getAllUsers } from "../../store/userSlice";
 import { Typography } from "@mui/material";
-import { getTrendingPosts } from "../../store/postSlice";
 
 export const Explore = () => {
   const dispatch = useDispatch();
@@ -17,8 +16,8 @@ export const Explore = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  const { posts } = useSelector((state) => state.posts);
-
+  const { posts, loader } = useSelector((state) => state.posts);
+  console.log(loader);
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
@@ -43,15 +42,21 @@ export const Explore = () => {
           >
             <h1>Explore </h1>
             {/* Post Cards */}
-            {posts.length === 0 ? (
-              <Typography variant="h3" component="h3">
-                Be the first one to post.
-              </Typography>
+            {loader ? (
+              <Loader />
             ) : (
               <Box>
-                {posts?.map((post) => (
-                  <PostCard post={post} key={post._id} />
-                ))}
+                {posts.length === 0 ? (
+                  <Typography variant="h3" component="h3">
+                    Be the first one to post.
+                  </Typography>
+                ) : (
+                  <Box>
+                    {posts?.map((post) => (
+                      <PostCard post={post} key={post._id} />
+                    ))}
+                  </Box>
+                )}
               </Box>
             )}
           </Box>

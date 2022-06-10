@@ -1,10 +1,27 @@
-import { ImageList } from "@mui/material";
-import { Box } from "@mui/system";
+import * as React from "react";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 
-export const loader = () => {
-  <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-    <ImageList>
-      <img src="https://res.cloudinary.com/dqgqdj4jf/image/upload/v1654809680/PalletGram/Curve-Loading_pepdeo.gif" />
+export const Loader = () => {
+  return (
+    <ImageList sx={{ width: 950, height: 700 }} cols={1} rowHeight={16}>
+      {itemData.map((item) => (
+        <ImageListItem key={item.img}>
+          <img
+            src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+            srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+            alt={item.title}
+            loading="lazy"
+          />
+        </ImageListItem>
+      ))}
     </ImageList>
-  </Box>;
+  );
 };
+
+const itemData = [
+  {
+    img: "https://res.cloudinary.com/dqgqdj4jf/image/upload/v1654809680/PalletGram/Curve-Loading_pepdeo.gif",
+    title: "loader",
+  },
+];
