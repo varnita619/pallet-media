@@ -261,24 +261,33 @@ export const NavBar = () => {
                   </Button>
                 </Typography>
               </Box>
-              <Box className="searchBar">
+              <Box className="searchBar" sx={{ position: "relative" }}>
                 <Search>
                   <SearchIconWrapper>
                     <SearchIcon />
                   </SearchIconWrapper>
-                  <StyledInputBase
-                    placeholder="Search…"
-                    inputProps={{ "aria-label": "search" }}
-                    onClick={handleSearchModalOpen}
-                    onChange={debounce(
-                      (e) => dispatch(searchUser(e.target.value)),
-                      400
-                    )}
-                  />
+                  <Box onChange={handleSearchModalOpen}>
+                    <StyledInputBase
+                      placeholder="Search…"
+                      inputProps={{ "aria-label": "search" }}
+                      onClick={handleSearchModalOpen}
+                      onChange={debounce(
+                        (e) => dispatch(searchUser(e.target.value)),
+                        400
+                      )}
+                      sx={{ zIndex: 9999 }}
+                    />
+                  </Box>
                 </Search>
               </Box>
               {/* searched users */}
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  position: "absolute",
+                }}
+              >
                 {searchTerm.trim() !== "" ? (
                   <Popover
                     id={id}
@@ -289,6 +298,7 @@ export const NavBar = () => {
                       vertical: "bottom",
                       horizontal: "left",
                     }}
+                    sx={{ zIndex: 0 }}
                   >
                     {foundUsers?.length === 0 && (
                       <Typography sx={{ p: 2 }}>User not found</Typography>
@@ -312,7 +322,7 @@ export const NavBar = () => {
                                 fontSize: "15px",
                                 color: "black",
                                 fontWeight: "bold",
-                                padding:'3px'
+                                padding: "3px",
                               },
                             }}
                             avatar={
