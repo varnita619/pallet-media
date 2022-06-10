@@ -43,7 +43,7 @@ export const UpdatePostModal = ({
   const dispatch = useDispatch();
   const [postData, setPostData] = React.useState({
     content: post?.content,
-    imgUrl: '',
+    imgUrl: "",
   });
   const [name, setName] = React.useState("");
 
@@ -73,9 +73,8 @@ export const UpdatePostModal = ({
           token: token,
         })
       );
-    
     }
-    handleUpdatePostModalClose()
+    handleUpdatePostModalClose();
   };
 
   return (

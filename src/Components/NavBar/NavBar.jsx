@@ -16,6 +16,7 @@ import {
   Modal,
   Backdrop,
   Paper,
+  CardHeader,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -29,9 +30,11 @@ import { useNavigate } from "react-router-dom";
 import { createNewPost } from "../../store/postSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutHandler } from "../../store/authSlice";
-import { searchUser } from "../../store/userSlice";
+import { searchUser, unfollowUser } from "../../store/userSlice";
 import { useEffect } from "react";
 import { debounce } from "../../Utils/debounce";
+import Popover from "@mui/material/Popover";
+import { Link } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -102,6 +105,21 @@ export const NavBar = () => {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
+
+  // Search PopOver open and close
+
+  const [anchorElSearch, setAnchorElSearch] = React.useState(null);
+
+  const handleSearchModalOpen = (event) => {
+    setAnchorElSearch(event.currentTarget);
+  };
+
+  const handleSearchModalClose = () => {
+    setAnchorElSearch(null);
+  };
+
+  const openSearchModal = Boolean(anchorElSearch);
+  const id = openSearchModal ? "simple-popover" : undefined;
 
   const handleCloseUserMenu = (event) => {
     if (event.target.innerText === "Profile") {
@@ -251,19 +269,85 @@ export const NavBar = () => {
                   <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ "aria-label": "search" }}
+                    onClick={handleSearchModalOpen}
                     onChange={debounce(
                       (e) => dispatch(searchUser(e.target.value)),
                       400
                     )}
                   />
                 </Search>
-
-                {/* searched users */}
-                <Box>
-                  {searchTerm.trim() !== "" ? 
-                  <Box> {foundUsers?.length === 0 && <h2>No user found</h2>} {foundUsers.map((user)=>console.log(user))} </Box> : null}
-                </Box>
               </Box>
+              {/* searched users */}
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                {searchTerm.trim() !== "" ? (
+                  <Popover
+                    id={id}
+                    open={openSearchModal}
+                    anchorEl={anchorElSearch}
+                    onClose={handleSearchModalClose}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                  >
+                    {foundUsers?.length === 0 && (
+                      <Typography sx={{ p: 2 }}>User not found</Typography>
+                    )}
+                    {foundUsers.map((user) => (
+                      <Box
+                        key={user._id}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Link
+                          onClick={handleSearchModalClose}
+                          to={`/user-profile/${user?.username}`}
+                          style={{ textDecoration: "none" }}
+                        >
+                          <CardHeader
+                            titleTypographyProps={{
+                              sx: {
+                                fontSize: "15px",
+                                color: "black",
+                                fontWeight: "bold",
+                                padding:'3px'
+                              },
+                            }}
+                            avatar={
+                              <Avatar src={user?.avatar} aria-label="recipe" />
+                            }
+                            title={user?.firstName + " " + user?.lastName}
+                            subheader={`@${user?.username}`}
+                          />
+                        </Link>
+                        <Box sx={{ padding: "6px" }}>
+                          <Button
+                            variant="outlined"
+                            sx={{
+                              borderRadius: "10px",
+                              padding: "13px",
+                              textTransform: "inherit",
+                            }}
+                            onClick={() =>
+                              dispatch(
+                                unfollowUser({
+                                  followUserId: user._id,
+                                  token: token,
+                                })
+                              )
+                            }
+                          >
+                            Unfollow
+                          </Button>
+                        </Box>
+                      </Box>
+                    ))}
+                  </Popover>
+                ) : null}
+              </Box>
+
               <Box sx={{ flexGrow: 1 }} />
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
                 <IconButton
