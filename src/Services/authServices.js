@@ -23,7 +23,7 @@ const authServices = () => {
                 toast.success(`Welcome ${login.username}`, {
                     position: "top-right"
                 });
-                navigate(`/user-profile/${login.username}`)
+                navigate(`/home`)
 
                 //Updating initial States
                 dispatch(authInfo(foundUser));

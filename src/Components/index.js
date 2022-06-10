@@ -6,3 +6,6 @@ export { EditDeletePost } from "./EditDeletePost/EditDeletePost";
 export { CommentsModal } from "./CommentsModal/CommentsModal";
 export { UpdatePostModal } from "./UpdatePostModal/UpdatePostModal";
 export { Comments } from "./Comments/Comments";
+export {FollowersModal} from "./FollowersModal/FollowersModal";
+export {FollowingModal} from "./FollowingModal/FollowingModal";
+export {Loader} from "./Loader/Loader";

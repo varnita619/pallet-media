@@ -31,7 +31,6 @@ export const CommentsModal = ({
     }
     else{
         dispatch(postComments({postId: post._id, commentData: commentData, token: token }))
-        toast.success("Comment added.", {position:"top-right"})
     }
     setCommentData("")
     handleCommentsModelClose()
@@ -65,7 +64,7 @@ export const CommentsModal = ({
               <Typography
                 variant="textarea"
                 component="textarea"
-                style={{ width: "100%", border: "none" }}
+                style={{ width: "100%", border: "none", resize:'none' }}
                 placeholder="Enter Your Text Here"
                 value={commentData}
                 onChange={(e) => setCommentData(e.target.value)}

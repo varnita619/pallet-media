@@ -15,7 +15,6 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { Comment } from "@mui/icons-material";
-import "./PostCard.css";
 import { EditDeletePost, CommentsModal, Comments } from "../../Components";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -24,12 +23,12 @@ import {
   bookmarkPosts,
   removeBookmarkPosts,
 } from "../../store/postSlice";
-import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export const PostCard = ({ post }) => {
   const { userInfo, token } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.users);
-  const { bookmark } = useSelector((state) => state.posts);
+  const { bookmark, posts } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const [editDeleteModalOpen, setEditDeleteModalOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -38,11 +37,16 @@ export const PostCard = ({ post }) => {
   const [currentUser, setCurrentUser] = React.useState(null);
   const [showComment, setShowComment] = React.useState(2);
 
+  const editPostIconsHandler = posts.filter(
+    (eachPost) => eachPost.username === userInfo.username
+  );
+
   React.useEffect(() => {
     setCurrentUser(
       users.filter((userInfo) => userInfo.username === post.username)[0]
     );
   }, [post, userInfo, users, currentUser]);
+  const navigate = useNavigate();
 
   const likeByUser = () => {
     return (
@@ -71,15 +75,6 @@ export const PostCard = ({ post }) => {
     }
   };
 
-  function copy() {
-    const el = document.createElement("input");
-    el.value = `` + post._id;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-  }
-
   const handleCommentsModelOpen = () => setCommentsModelOpen(true);
   const handleCommentsModelClose = () => setCommentsModelOpen(false);
 
@@ -98,28 +93,37 @@ export const PostCard = ({ post }) => {
         handleCommentsModelClose={handleCommentsModelClose}
         post={post}
       />
-      <Card className="card" sx={{ border: ".5px solid #e2e8f0" }}>
+      <Card
+        sx={{
+          border: ".5px solid #e2e8f0",
+          maxWidth: 600,
+          marginTop: "20px",
+        }}
+      >
         <CardHeader
-          className=""
           avatar={
             <Avatar
-              sx={{ bgcolor: grey[50] }}
+              sx={{ bgcolor: grey[50], cursor: "pointer" }}
               aria-label="recipe"
               src={currentUser?.avatar}
+              onClick={() => navigate(`/user-profile/${currentUser.username}`)}
             >
               {currentUser?.username}
             </Avatar>
           }
-          action={
-            <IconButton
-              aria-label="settings"
-              onClick={handleEditDeleteModalOpen}
-            >
-              <MoreVertIcon />
-            </IconButton>
-          }
+          action={editPostIconsHandler.map((icon) =>
+            icon._id === _id ? (
+              <IconButton
+                aria-label="settings"
+                onClick={handleEditDeleteModalOpen}
+                key={icon._id}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            ) : null
+          )}
           title={currentUser?.firstName + " " + currentUser?.lastName}
-          subheader="June 5, 2022"
+          subheader="June 10, 2022"
         />
         <EditDeletePost
           editDeleteModalOpen={editDeleteModalOpen}
@@ -133,7 +137,7 @@ export const PostCard = ({ post }) => {
             height="250"
             image={imgUrl}
             alt="not uploaded"
-            sx={{ objectFit: "contain" }}
+            sx={{ objectFit: "cover" }}
           />
         ) : (
           ""
@@ -169,10 +173,6 @@ export const PostCard = ({ post }) => {
             onClick={() => bookmarksHandler()}
           >
             {bookmarkByUser() ? <BookmarkIcon /> : <BookmarkBorderIcon />}
-          </IconButton>
-
-          <IconButton aria-label="share" onClick={copy}>
-            <ShareIcon />
           </IconButton>
         </CardActions>
         {comments

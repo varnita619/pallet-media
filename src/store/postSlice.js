@@ -1,7 +1,7 @@
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 import axios from "axios";
 import toast from "react-hot-toast";
-import { getPosts, likedPostService, dislikedPostService, bookmarkService, removeBookmarkService, editPostServices, deletePostServices, postCommentsServices, editCommentsServices, deleteCommentsServices } from "../Services/postServices";
+import { getPosts, likedPostService, dislikedPostService, bookmarkService, removeBookmarkService, editPostServices, deletePostServices, postCommentsServices, editCommentsServices, deleteCommentsServices, getUserPostServices } from "../Services/postServices";
 
 export const getAllPosts = createAsyncThunk('posts/getPosts', async () => {
     try {
@@ -17,10 +17,13 @@ export const getAllPosts = createAsyncThunk('posts/getPosts', async () => {
 export const createNewPost = createAsyncThunk('posts/createPost', async ({ content, imgUrl, token }) => {
     try {
         const response = await axios.post('/api/posts', { postData: { content: content, imgUrl: imgUrl, token: token } }, { headers: { authorization: token } });
+        if (response.status === 201) {
+            toast.success("New Post added", { position: "top-right" })
+        }
         return response.data.posts;
     }
     catch (error) {
-        console.log(error)
+        console.error(error)
     }
 })
 
@@ -28,55 +31,71 @@ export const createNewPost = createAsyncThunk('posts/createPost', async ({ conte
 export const likedPosts = createAsyncThunk('posts/likedPosts', async ({ postId, token }) => {
     try {
         const response = await likedPostService(postId, token)
+        if (response.status === 201) {
+            toast.success("Liked Post", { position: "top-right" })
+        }
         return response.data.posts;
     }
     catch (error) {
-        console.log(error)
+        console.error(error)
     }
 })
 
 export const dislikedPosts = createAsyncThunk('posts/dislikedPosts', async ({ postId, token }) => {
     try {
         const response = await dislikedPostService(postId, token)
+        if (response.status === 201) {
+            toast.success("Disliked Post", { position: "top-right" })
+        }
         return response.data.posts;
     }
     catch (error) {
-        console.log(error)
+        console.error(error)
     }
 })
 
 export const bookmarkPosts = createAsyncThunk('posts/bookmarkPosts', async ({ postId, token }) => {
     try {
         const response = await bookmarkService(postId, token)
-        toast.success("Post added to BookMark", { position: "top-right" })
+        if (response.status === 200) {
+            toast.success("Post added to BookMark", { position: "top-right" })
+        }
         return response.data.bookmarks;
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 })
 
 export const removeBookmarkPosts = createAsyncThunk('posts/removeBookmarkPosts', async ({ postId, token }) => {
     try {
         const response = await removeBookmarkService(postId, token)
-        toast.success("Post removed from BookMark", { position: "top-right" })
+        if (response.status === 200) {
+            toast.success("Post removed from BookMark", { position: "top-right" })
+        }
         return response.data.bookmarks;
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 })
 
 export const editPost = createAsyncThunk('/posts/editPosts', async ({ id, content, imgUrl, token }) => {
     try {
         const response = await axios.post(`/api/posts/edit/${id}`, { postData: { content: content, imgUrl: imgUrl, token: token } }, { headers: { authorization: token } })
+        if (response.status === 201) {
+            toast.success("Post Editted", { position: "top-right" })
+        }
         return response.data.posts;
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 })
 
 export const deletePost = createAsyncThunk('/posts/deletePosts', async ({ postId, token }) => {
     try {
         const response = await deletePostServices(postId, token)
+        if (response.status === 201) {
+            toast.success("Post Deleted", { position: "top-right" })
+        }
         return response.data.posts;
     } catch (error) {
         console.log(error)
@@ -86,6 +105,9 @@ export const deletePost = createAsyncThunk('/posts/deletePosts', async ({ postId
 export const postComments = createAsyncThunk('/posts/postComments', async ({ postId, commentData, token }) => {
     try {
         const response = await postCommentsServices(postId, commentData, token)
+        if (response.status === 201) {
+            toast.success("Comment added", { position: "top-right" })
+        }
         return response.data.posts;
     } catch (error) {
         console.log(error)
@@ -95,26 +117,41 @@ export const postComments = createAsyncThunk('/posts/postComments', async ({ pos
 export const editComments = createAsyncThunk(
     'posts/editComments',
     async ({ postId, commentId, commentData, token }) => {
-      try {
-        const response = await editCommentsServices(postId, commentId, commentData, token);
-        return response.data.posts;
-      } catch (error) {
-        console.error(error);
-      }
+        try {
+            const response = await editCommentsServices(postId, commentId, commentData, token);
+            if (response.status === 201) {
+                toast.success("Comment Updated", { position: "top-right" })
+            }
+            return response.data.posts;
+        } catch (error) {
+            console.error(error);
+        }
     },
-  );
-  
-  export const deleteComments = createAsyncThunk(
+);
+
+export const deleteComments = createAsyncThunk(
     'posts/deleteComments',
-    async ({ postId, commentId, token}) => {
-      try {
-        const response = await deleteCommentsServices(postId, commentId, token);
-        return response.data.posts;
-      } catch (error) {
-        console.error(error);
-      }
+    async ({ postId, commentId, token }) => {
+        try {
+            const response = await deleteCommentsServices(postId, commentId, token);
+            if (response.success === 201) {
+                toast.success("Comment Deleted", { position: "top-right" })
+            }
+            return response.data.posts;
+        } catch (error) {
+            console.error(error);
+        }
     },
-  );
+);
+
+//Trending post
+export const getTrendingPosts = createAsyncThunk(
+    "posts/trendingPost",
+    async ({ trendingPost }) => {
+        const data = await trendingPost;
+        return data;
+    }
+);
 
 
 
@@ -122,7 +159,7 @@ const initialState = {
     loader: false,
     error: "",
     posts: [],
-    bookmark: []
+    bookmark: [],
 }
 
 const postSlice = createSlice({
@@ -161,10 +198,6 @@ const postSlice = createSlice({
         },
 
         // Liked Posts
-        [likedPosts.pending]: (state) => {
-            state.loader = true;
-        },
-
         [likedPosts.fulfilled]: (state, action) => {
             state.loader = false;
             state.posts = action.payload
@@ -175,10 +208,6 @@ const postSlice = createSlice({
         },
 
         // Dislike Posts
-        [dislikedPosts.pending]: (state) => {
-            state.loader = true;
-        },
-
         [dislikedPosts.fulfilled]: (state, action) => {
             state.loader = false;
             state.posts = action.payload
@@ -189,10 +218,6 @@ const postSlice = createSlice({
         },
 
         // BookMark Posts
-        [bookmarkPosts.pending]: (state) => {
-            state.loader = true;
-        },
-
         [bookmarkPosts.fulfilled]: (state, action) => {
             state.loader = false;
             state.bookmark = action.payload
@@ -203,10 +228,6 @@ const postSlice = createSlice({
         },
 
         // Remove BookMark Posts
-        [removeBookmarkPosts.pending]: (state) => {
-            state.loader = true;
-        },
-
         [removeBookmarkPosts.fulfilled]: (state, action) => {
             state.loader = false;
             state.bookmark = action.payload
@@ -231,10 +252,6 @@ const postSlice = createSlice({
         },
 
         // Delete Posts
-        [deletePost.pending]: (state) => {
-            state.loader = true;
-        },
-
         [deletePost.fulfilled]: (state, action) => {
             state.loader = false;
             state.posts = action.payload
@@ -258,8 +275,8 @@ const postSlice = createSlice({
             state.loader = false;
         },
 
-         // Edit Comments
-         [editComments.pending]: (state) => {
+        // Edit Comments
+        [editComments.pending]: (state) => {
             state.loader = true;
         },
 
@@ -272,11 +289,7 @@ const postSlice = createSlice({
             state.loader = false;
         },
 
-         // Delete Comments
-         [deleteComments.pending]: (state) => {
-            state.loader = true;
-        },
-
+        // Delete Comments
         [deleteComments.fulfilled]: (state, action) => {
             state.loader = false;
             state.posts = action.payload
@@ -284,6 +297,11 @@ const postSlice = createSlice({
 
         [deleteComments.rejected]: (state) => {
             state.loader = false;
+        },
+
+        //Filtered Post
+        [getTrendingPosts.fulfilled]: (state, action) => {
+            state.posts = action.payload;
         },
 
     }

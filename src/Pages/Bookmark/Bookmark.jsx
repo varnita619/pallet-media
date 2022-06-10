@@ -11,7 +11,7 @@ export const Bookmark = () => {
   const { bookmark, posts } = useSelector((state) => state.posts);
 
   const bookmarkPost = bookmark.map((eachBookMark) => {
-    return posts.find((post) => post._id === eachBookMark);
+    return posts?.find((post) => post._id === eachBookMark);
   });
 
   return (
@@ -31,8 +31,15 @@ export const Bookmark = () => {
           You haven't BookMarked any post yet!
         </Typography>
       ) : (
-        <Box className="user-profile-container">
-          <Box className="user-profile-inside-container">
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <Box sx={{ display: "flex", width: "100%" }}>
             <Box
               sx={{
                 width: "100%",

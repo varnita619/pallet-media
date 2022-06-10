@@ -14,9 +14,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { ThemeProvider } from "@mui/material/styles";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { theme } from "../../theme";
-import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { editPost, deletePost } from "../../store/postSlice";
+import { editPost } from "../../store/postSlice";
 
 const style = {
   position: "absolute",
@@ -44,7 +43,7 @@ export const UpdatePostModal = ({
   const dispatch = useDispatch();
   const [postData, setPostData] = React.useState({
     content: post?.content,
-    imgUrl: '',
+    imgUrl: "",
   });
   const [name, setName] = React.useState("");
 
@@ -74,10 +73,8 @@ export const UpdatePostModal = ({
           token: token,
         })
       );
-    
     }
-    toast.success("Post Updated");
-    handleUpdatePostModalClose()
+    handleUpdatePostModalClose();
   };
 
   return (

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
-import { NavBar, PostCard, SuggestionsSideBar } from "../../Components";
+import { Loader, NavBar, PostCard } from "../../Components";
 import { getAllPosts } from "../../store/postSlice";
 import { theme } from "../../theme";
 import { ThemeProvider } from "styled-components";
@@ -16,47 +16,48 @@ export const Explore = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  const { posts } = useSelector((state) => state.posts);
-
+  const { posts, loader } = useSelector((state) => state.posts);
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
-      <Box className="user-profile-container">
-        <Box className="user-profile-inside-container">
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <Box sx={{ display: "flex", width: "100%" }}>
           <Box
             sx={{
               width: "100%",
               padding: "10px",
               display: "flex",
               flexDirection: "column",
-              marginLeft: "20px",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
+            <h1>Explore </h1>
             {/* Post Cards */}
-            {posts.length === 0 ? (
-                <Typography variant="h3" component='h3' >Be the first one to post.</Typography>
-              ) : (
-            <Box>
-              {posts?.map((post) => (
-                <PostCard post={post} key={post._id} />
-              ))}
-            </Box>
-              )}
-          </Box>
-
-          {/* Suggestion Box */}
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              width: "39%",
-              margin: "0 0px",
-            }}
-          >
-            <SuggestionsSideBar />
+            {loader ? (
+              <Loader />
+            ) : (
+              <Box>
+                {posts.length === 0 ? (
+                  <Typography variant="h3" component="h3">
+                    Be the first one to post.
+                  </Typography>
+                ) : (
+                  <Box>
+                    {posts?.map((post) => (
+                      <PostCard post={post} key={post._id} />
+                    ))}
+                  </Box>
+                )}
+              </Box>
+            )}
           </Box>
         </Box>
       </Box>
