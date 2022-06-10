@@ -23,12 +23,12 @@ import {
   bookmarkPosts,
   removeBookmarkPosts,
 } from "../../store/postSlice";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const PostCard = ({ post }) => {
   const { userInfo, token } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.users);
-  const { bookmark } = useSelector((state) => state.posts);
+  const { bookmark, posts } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const [editDeleteModalOpen, setEditDeleteModalOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -36,6 +36,10 @@ export const PostCard = ({ post }) => {
   const { content, _id, imgUrl, likes, comments } = post;
   const [currentUser, setCurrentUser] = React.useState(null);
   const [showComment, setShowComment] = React.useState(2);
+
+  const editPostIconsHandler = posts.filter(
+    (eachPost) => eachPost.username === userInfo.username
+  );
 
   React.useEffect(() => {
     setCurrentUser(
@@ -107,14 +111,17 @@ export const PostCard = ({ post }) => {
               {currentUser?.username}
             </Avatar>
           }
-          action={
-            <IconButton
-              aria-label="settings"
-              onClick={handleEditDeleteModalOpen}
-            >
-              <MoreVertIcon />
-            </IconButton>
-          }
+          action={editPostIconsHandler.map((icon) =>
+            icon._id === _id ? (
+              <IconButton
+                aria-label="settings"
+                onClick={handleEditDeleteModalOpen}
+                key={icon._id}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            ) : null
+          )}
           title={currentUser?.firstName + " " + currentUser?.lastName}
           subheader="June 10, 2022"
         />

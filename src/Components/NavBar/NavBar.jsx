@@ -29,6 +29,9 @@ import { useNavigate } from "react-router-dom";
 import { createNewPost } from "../../store/postSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutHandler } from "../../store/authSlice";
+import { searchUser } from "../../store/userSlice";
+import { useEffect } from "react";
+import { debounce } from "../../Utils/debounce";
 
 const style = {
   position: "absolute",
@@ -120,7 +123,7 @@ export const NavBar = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { users } = useSelector((state) => state.users);
+  const { users, searchTerm, foundUsers } = useSelector((state) => state.users);
 
   const currentUser = users.find(
     (eachUser) => eachUser.username === userInfo.username
@@ -192,6 +195,10 @@ export const NavBar = () => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    dispatch(searchUser(""));
+  }, [dispatch]);
+
   return (
     <ThemeProvider theme={theme}>
       <Paper>
@@ -244,8 +251,18 @@ export const NavBar = () => {
                   <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ "aria-label": "search" }}
+                    onChange={debounce(
+                      (e) => dispatch(searchUser(e.target.value)),
+                      400
+                    )}
                   />
                 </Search>
+
+                {/* searched users */}
+                <Box>
+                  {searchTerm.trim() !== "" ? 
+                  <Box> {foundUsers?.length === 0 && <h2>No user found</h2>} {foundUsers.map((user)=>console.log(user))} </Box> : null}
+                </Box>
               </Box>
               <Box sx={{ flexGrow: 1 }} />
               <Box sx={{ display: { xs: "none", md: "flex" } }}>

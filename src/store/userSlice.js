@@ -51,13 +51,25 @@ export const unfollowUser = createAsyncThunk('user/unFollow', async ({ followUse
 
 const initialState = {
     users: [],
-    loader: false
+    loader: false,
+    searchTerm: '',
+    foundUsers: [],
 }
 
 const userSlice = createSlice({
     name: 'users',
     initialState,
-    reducers: {},
+    reducers: {
+        searchUser: (state, { payload }) => {
+            state.searchTerm = payload;
+            state.foundUsers = state.users.filter(
+                user =>
+                    user.username.toLowerCase().includes(payload.trim().toLowerCase()) ||
+                    user.firstName.toLowerCase().includes(payload.trim().toLowerCase()) ||
+                    user.lastName.toLowerCase().includes(payload.trim().toLowerCase())
+            );
+        },
+    },
     extraReducers: {
 
         // GetAll Users
@@ -119,5 +131,7 @@ const userSlice = createSlice({
         },
     },
 });
+
+export const {searchUser} = userSlice.actions;
 
 export default userSlice.reducer;

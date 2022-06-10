@@ -17,7 +17,6 @@ export const Explore = () => {
   }, [dispatch]);
 
   const { posts, loader } = useSelector((state) => state.posts);
-  console.log(loader);
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
