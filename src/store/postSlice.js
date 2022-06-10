@@ -198,10 +198,6 @@ const postSlice = createSlice({
         },
 
         // Liked Posts
-        [likedPosts.pending]: (state) => {
-            state.loader = true;
-        },
-
         [likedPosts.fulfilled]: (state, action) => {
             state.loader = false;
             state.posts = action.payload
@@ -212,10 +208,6 @@ const postSlice = createSlice({
         },
 
         // Dislike Posts
-        [dislikedPosts.pending]: (state) => {
-            state.loader = true;
-        },
-
         [dislikedPosts.fulfilled]: (state, action) => {
             state.loader = false;
             state.posts = action.payload
@@ -226,10 +218,6 @@ const postSlice = createSlice({
         },
 
         // BookMark Posts
-        [bookmarkPosts.pending]: (state) => {
-            state.loader = true;
-        },
-
         [bookmarkPosts.fulfilled]: (state, action) => {
             state.loader = false;
             state.bookmark = action.payload
@@ -240,10 +228,6 @@ const postSlice = createSlice({
         },
 
         // Remove BookMark Posts
-        [removeBookmarkPosts.pending]: (state) => {
-            state.loader = true;
-        },
-
         [removeBookmarkPosts.fulfilled]: (state, action) => {
             state.loader = false;
             state.bookmark = action.payload
@@ -268,10 +252,6 @@ const postSlice = createSlice({
         },
 
         // Delete Posts
-        [deletePost.pending]: (state) => {
-            state.loader = true;
-        },
-
         [deletePost.fulfilled]: (state, action) => {
             state.loader = false;
             state.posts = action.payload
@@ -310,10 +290,6 @@ const postSlice = createSlice({
         },
 
         // Delete Comments
-        [deleteComments.pending]: (state) => {
-            state.loader = true;
-        },
-
         [deleteComments.fulfilled]: (state, action) => {
             state.loader = false;
             state.posts = action.payload

@@ -19,17 +19,17 @@ export const SuggestionsSideBar = () => {
 
   // filter user on the basis of user name for follow/ unfollow
 
-  const currentUser = users?.find(
+  const currentUser = users.find(
     (each) => each.username === userInfo.username
   );
 
   const currentUserFollowing = currentUser?.following;
 
-  const userSuggestion = users.filter(
+  const userSuggestion = users?.filter(
     (eachUser) =>
-      !currentUserFollowing.find(
+      !currentUserFollowing?.find(
         (each) => eachUser.username === each.username
-      ) && eachUser.username !== currentUser.username
+      ) && eachUser.username !== currentUser?.username
   );
 
   return (

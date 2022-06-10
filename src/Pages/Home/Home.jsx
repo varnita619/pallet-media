@@ -43,7 +43,7 @@ export const Home = () => {
   );
   const loggedUserFollowing = loggedUser?.following;
 
-  const feedPost = posts?.filter(
+  const feedPost = posts.filter(
     (eachPost) =>
       loggedUserFollowing?.find(
         (each) => each.username === eachPost.username
@@ -65,7 +65,6 @@ export const Home = () => {
           <Box
             sx={{
               width: "100%",
-              padding: "10px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
@@ -103,7 +102,7 @@ export const Home = () => {
               <Box>
                 {feedPost.length === 0 ? (
                   <Typography variant="h3" component="h3">
-                    Post Something.
+                    Post something or follow people.
                   </Typography>
                 ) : (
                   <Box>

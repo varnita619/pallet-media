@@ -148,7 +148,7 @@ export const UserProfile = () => {
                   <Typography
                     component="span"
                     variant="span"
-                    sx={{ width: "300px", wordWrap: "break-word" }}
+                    sx={{ width: "500px", wordWrap: "break-word" }}
                   >
                     {currentUserDetails?.bio}
                   </Typography>
@@ -156,7 +156,7 @@ export const UserProfile = () => {
                     href={currentUserDetails?.website}
                     target="_blank"
                     sx={{
-                      width: "300px",
+                      width: "4600px",
                       wordWrap: "break-word",
                       textDecoration: "underline",
                       color: "#f73378",
